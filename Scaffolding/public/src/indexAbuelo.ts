@@ -1,6 +1,7 @@
 import * as components from "./components/indexPadre"
 import Navbar from "./components/navbar/navbar";
 import Profile, { Attribute } from "./components/profile/profile";
+import NavBar, { Attribute2 } from "./components/navbar/navbar";
 import { dataProfiles } from "./data/dataProfiles";
 
 class AppContainer extends HTMLElement {
@@ -31,14 +32,13 @@ class AppContainer extends HTMLElement {
 
     render(){
         if(this.shadowRoot){
-            this.shadowRoot.innerHTML = `
-            <style> img {width: 200px; 
-            height: 100px; }
-            </style>
-            <img src="https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Be.png?alt=media&token=83fca793-ed05-448e-b3c5-33546eb7d914" alt="">  `
-
+            this.shadowRoot.innerHTML = ``
+           
             const navbar = document.createElement("my-navbar") as Navbar;
-            this.shadowRoot.appendChild(navbar);
+            navbar.setAttribute(Attribute2.settings, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb");
+            navbar.setAttribute(Attribute2.logo, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Be.png?alt=media&token=83fca793-ed05-448e-b3c5-33546eb7d914");
+            navbar.setAttribute(Attribute2.userLogo, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=f6ff7ebe-d379-477c-ad06-03ee95d3542c");
+            this.shadowRoot?.appendChild(navbar);
 
             const divider = this.ownerDocument.createElement("hr");
             this.shadowRoot?.appendChild(divider);

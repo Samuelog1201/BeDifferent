@@ -1,31 +1,73 @@
-export enum Attribute {
-    
+export enum Attribute2 {
     "logo" = "logo",
     "settings" = "settings",
+    "userLogo" = "userLogo",
 }
 
-class Navbar extends HTMLElement{
+class Navbar extends HTMLElement {
+    logo?: string;
+    settings?: string;
+    userLogo?: string;
 
-    constructor(){
+    constructor() {
         super();
-        this.attachShadow({mode: "open"});
+        this.attachShadow({ mode: "open" });
     }
-    
-    connectedCallback(){
+
+    static get observedAttributes() {
+        return [Attribute2.logo, Attribute2.settings];
+    }
+
+    attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
+        switch(propName) {
+            case Attribute2.logo:
+                this.logo = newValue;
+                break;
+            case Attribute2.settings:
+                this.settings = newValue;
+                break;
+            case Attribute2.logo:
+                this.userLogo = newValue;
+                break;
+        }
         this.render();
     }
-    
-    render(){
-        if(this.shadowRoot){
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
+        if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
-            <div>
-            <h1>hola</h1>
-           <img src="https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Be.png?alt=media&token=83fca793-ed05-448e-b3c5-33546eb7d914" alt="">  
-            </div>
-            `
+            <style>
+                nav {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    background-color: #f8f9fa;
+                }
+                img {
+                    width: 80px;
+                    height: auto;
+                }
+            </style>
+            <nav>
+                <div>
+                <img src="${this.userLogo}" alt="Logo">
+                </div>
+                <div>
+                <img src="${this.logo}" alt="Logo">
+                </div>
+                <div>
+                <img src="${this.settings}" alt="Settings" style="cursor: pointer;">
+                 </div>
+            </nav>
+            `;
         }
     }
 }
 
-customElements.define("my-navbar",Navbar);
+customElements.define("my-navbar", Navbar);
 export default Navbar;
