@@ -1,13 +1,15 @@
 export enum Attribute2 {
     "logo" = "logo",
     "settings" = "settings",
-    "userLogo" = "userLogo",
+    "userlogo" = "userlogo",
 }
 
 class Navbar extends HTMLElement {
     logo?: string;
     settings?: string;
-    userLogo?: string;
+    userlogo?: string;
+    usersListVisible: boolean = false;
+    originalUserLogo: string = ""; // Para almacenar la URL original del logo
 
     constructor() {
         super();
@@ -15,19 +17,20 @@ class Navbar extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [Attribute2.logo, Attribute2.settings];
+        return [Attribute2.logo, Attribute2.settings, Attribute2.userlogo];
     }
 
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
-        switch(propName) {
+        switch (propName) {
             case Attribute2.logo:
                 this.logo = newValue;
                 break;
             case Attribute2.settings:
                 this.settings = newValue;
                 break;
-            case Attribute2.logo:
-                this.userLogo = newValue;
+            case Attribute2.userlogo:
+                this.userlogo = newValue;
+                this.originalUserLogo = newValue || ""; // Guardar la URL original
                 break;
         }
         this.render();
@@ -35,6 +38,51 @@ class Navbar extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.addEventListeners();
+    }
+
+    addEventListeners() {
+        const userlogo = this.shadowRoot?.querySelector("#userlogo");
+        if (userlogo) {
+            userlogo.addEventListener("click", () => {
+                this.toggleUserList();
+            });
+        }
+    }
+
+    toggleUserList() {
+        this.usersListVisible = !this.usersListVisible; 
+        const userList = this.shadowRoot?.querySelector("#user-list");
+        const userlogoElement = this.shadowRoot?.querySelector("#userlogo") as HTMLImageElement;
+
+        // Cambiar la imagen del userlogo
+        if (userlogoElement) {
+            userlogoElement.src = this.usersListVisible
+                ? "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User-Black.png?alt=media&token=4d96a706-2d1f-477f-bbef-d760a179f881"
+                : this.originalUserLogo; // Volver a la imagen original
+        }
+
+        if (userList) {
+            if (this.usersListVisible) {
+                userList.classList.add("visible");
+            } else {
+                userList.classList.remove("visible");
+            }
+        }
+    }
+
+    renderUserProfiles() {
+        const container = document.createElement("div");
+        container.setAttribute("id", "user-list");
+
+        // Iterar sobre los perfiles de usuario y crear elementos de perfil
+        const profiles = this.querySelectorAll("my-profile");
+        profiles.forEach(profile => {
+            const profileClone = profile.cloneNode(true);
+            container.appendChild(profileClone);
+        });
+
+        return container;
     }
 
     render() {
@@ -48,23 +96,47 @@ class Navbar extends HTMLElement {
                     padding: 10px;
                     background-color: #f8f9fa;
                 }
+
                 img {
                     width: 80px;
                     height: auto;
+                    cursor: pointer;
+                }
+
+                #user-list {
+                    display: none; /* Inicialmente oculto */
+                    background-color: #ffffff;
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    position: absolute;
+                    top: 60px;
+                    right: 10px;
+                    width: 300px;
+                    z-index: 1000;
+                }
+
+                #user-list.visible {
+                    display: block; /* Se muestra cuando la clase 'visible' está añadida */
                 }
             </style>
             <nav>
-                <div>
-                <img src="${this.userLogo}" alt="Logo">
+
+               <div>
+                    <img id="settings" src="${this.settings}" alt="Settings">
                 </div>
                 <div>
-                <img src="${this.logo}" alt="Logo">
+                    <img id="logo" src="${this.logo}" alt="Logo">
                 </div>
-                <div>
-                <img src="${this.settings}" alt="Settings" style="cursor: pointer;">
-                 </div>
+                
+                 <div>
+                    <img id="userlogo" src="${this.userlogo}" alt="User Logo">
+                </div>
+                
             </nav>
             `;
+
+            const userList = this.renderUserProfiles();
+            this.shadowRoot.appendChild(userList); 
         }
     }
 }
