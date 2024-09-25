@@ -24,6 +24,7 @@ class RightSection extends HTMLElement {
                         width: 250px;
                         z-index: 1000;
                         margin: 10px;
+
                     }
                 
                 </style>

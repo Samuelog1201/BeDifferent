@@ -1,5 +1,6 @@
 export {default as Profile} from "./profile/profile"
 export {default as NavBar} from "./navbar/navbar"
-export {default as centralSection} from "./tweet/tweet"
-export {default as leftSection} from "./leftSection/leftSection"
+export {default as LeftSection} from "./leftSection/leftSection"
 export {default as RightSection} from "./rightSection/rightSection"
+export {default as Tweet} from "./tweet/tweet"
+export {default as CentralSection} from "./centralSection/centerSection"

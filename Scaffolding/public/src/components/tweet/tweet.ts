@@ -65,14 +65,11 @@ class Tweet extends HTMLElement {
             <section>
                 <div>
                     <h1>${this.username}</h1>
-                <div>
                     <p>${this.text}</p>
-                </div>
-                <div>
                     <img id="image-upload" src="${this.image}" alt="image upload">
-                </div>
+                    <hr> </hr>
+                </div>         
 
-                <hr> </hr>
             </section>
         `;
     }
