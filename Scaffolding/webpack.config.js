@@ -18,4 +18,5 @@ const path = require('path');
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
+
     };

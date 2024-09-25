@@ -1,66 +1,83 @@
- export enum Attribute {
-    
-    "image" = "image",
+export enum Attribute3 {
+    "username" = "username",
     "text" = "text",
-    "uid" = "uid",
-
+    "image" = "image",
 }
 
-class tweet extends HTMLElement{
-    
-    image?: string;
+class Tweet extends HTMLElement {
+    username?: string;
     text?: string;
-    uid?: number;
+    image?: string;
 
     
-    static get observedAttributes(){
-        const attrs: Record<Attribute,null> = {
-            
-            image: null,
-            text: null,
-            uid: null,
-          
-        }
-        return Object.keys(attrs); 
-    }
-    
-    attributeChangedCallback(propName:Attribute,oldValue: string | undefined,newValue: string | undefined){
-        switch(propName){
-            case Attribute.uid :
 
-                this.uid = newValue ? Number(newValue) : undefined;
-            break;
-
-            default: 
-            this[propName] = newValue;
-            break;
-        }
-        
-        this.render();
-    }
-    
-    constructor(){
+    constructor() {
         super();
-        this.attachShadow({mode: "open"});
+        this.attachShadow({ mode: "open" });
     }
-    
-    connectedCallback(){
+
+    static get observedAttributes() {
+        return [Attribute3.username, Attribute3.text, Attribute3.image];
+    }
+
+    attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
+        switch (propName) {
+            case Attribute3.username:
+                this.username = newValue;
+                break;
+            case Attribute3.text:
+                this.text = newValue;
+                break;
+            case Attribute3.image:
+                this.image = newValue;
+                break;
+        }
         this.render();
     }
-    
-    render(){
-        if(this.shadowRoot){
-            this.shadowRoot.innerHTML = `
-            <section>
-            <h1>${this.text}</h1>
-            <img src="${this.image}" alt="">
-            <p>ID : ${this.uid}</p>
 
+        render() {
+        if (this.shadowRoot) {
+            this.shadowRoot.innerHTML = `
+            <style>
+                section {
+                    display: flex; /* O usa display: grid; */
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    background-color: white;
+                    border-radius: 10px;
+                    padding: 15px;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            
+                }
+                h1 {
+                    font-size: 1.2em;
+                    margin: 5px 0;
+                }
+                img {
+                    max-width: 100%; /* Asegura que la imagen no se desborde */
+                    border-radius: 10px; /* Opcional para redondear bordes */
+                    width: 500px;
+                    height: auto;
+
+                }
+            </style>
+            <section>
+                <div>
+                    <h1>${this.username}</h1>
+                <div>
+                    <p>${this.text}</p>
+                </div>
+                <div>
+                    <img id="image-upload" src="${this.image}" alt="image upload">
+                </div>
+
+                <hr> </hr>
             </section>
-            `
-        }
+        `;
     }
 }
+}
 
-customElements.define("my-tweet",tweet);
-export default tweet; 
+customElements.define("my-tweet", Tweet);
+export default Tweet;

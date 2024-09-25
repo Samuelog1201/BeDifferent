@@ -2,7 +2,7 @@ export const dataProfiles = [
    {
        uid: 1,
        name: "Samuelog01",
-       avatar: "https://img.freepik.com/vector-gratis/icono-vectorial-dibujos-animados-piquetes-pie-ilustracion-icono-naturaleza-animal-vector-plano-aislado_138676-12969.jpg",
+       avatar: "https://static.vecteezy.com/system/resources/thumbnails/023/959/280/small_2x/transparent-background-with-a-chick-free-png.png",
    },
    {
        uid: 2,

@@ -51,7 +51,7 @@ class Navbar extends HTMLElement {
     }
 
     toggleUserList() {
-        this.usersListVisible = !this.usersListVisible; 
+        this.usersListVisible = !this.usersListVisible;
         const userList = this.shadowRoot?.querySelector("#user-list");
         const userlogoElement = this.shadowRoot?.querySelector("#userlogo") as HTMLImageElement;
 
@@ -62,13 +62,9 @@ class Navbar extends HTMLElement {
                 : this.originalUserLogo; // Volver a la imagen original
         }
 
-        if (userList) {
-            if (this.usersListVisible) {
-                userList.classList.add("visible");
-            } else {
-                userList.classList.remove("visible");
-            }
-        }
+        // Emitir evento para alternar la lista de usuarios en la sección derecha
+        const event = new CustomEvent('toggle-user-list', { bubbles: true, composed: true });
+        this.dispatchEvent(event);
     }
 
     renderUserProfiles() {
@@ -95,6 +91,8 @@ class Navbar extends HTMLElement {
                     align-items: center;
                     padding: 10px;
                     background-color: #f8f9fa;
+                    overflow-y: auto;
+
                 }
 
                 img {
@@ -103,15 +101,19 @@ class Navbar extends HTMLElement {
                     cursor: pointer;
                 }
 
+                #logo {
+                    width: 110px;
+                    height: auto;
+                }
                 #user-list {
                     display: none; /* Inicialmente oculto */
                     background-color: #ffffff;
                     border: 1px solid #ddd;
                     padding: 10px;
                     position: absolute;
-                    top: 60px;
-                    right: 10px;
-                    width: 300px;
+                    top: 60px; /* Ajusta según sea necesario */
+                    right: 10px; /* Ajusta según sea necesario */
+                    width: 300px; /* Ajusta según sea necesario */
                     z-index: 1000;
                 }
 
@@ -120,7 +122,6 @@ class Navbar extends HTMLElement {
                 }
             </style>
             <nav>
-
                <div>
                     <img id="settings" src="${this.settings}" alt="Settings">
                 </div>
@@ -128,15 +129,15 @@ class Navbar extends HTMLElement {
                     <img id="logo" src="${this.logo}" alt="Logo">
                 </div>
                 
-                 <div>
+                <div>
                     <img id="userlogo" src="${this.userlogo}" alt="User Logo">
                 </div>
-                
+
             </nav>
             `;
 
             const userList = this.renderUserProfiles();
-            this.shadowRoot.appendChild(userList); 
+            this.shadowRoot.appendChild(userList);
         }
     }
 }
