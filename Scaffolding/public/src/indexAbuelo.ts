@@ -1,13 +1,8 @@
 import * as components from "./components/indexPadre"
-import Navbar from "./components/navbar/navbar";
-import Profile, { Attribute } from "./components/profile/profile";
+import { Profile, NavBar, LeftSection, RightSection, Tweet, CenterSection } from "./components/indexPadre";
+import { Attribute,Attribute2, Attribute3 } from "./components/indexPadre";
 import { dataProfiles } from "./data/dataProfiles";
-import { Attribute2 } from "./components/navbar/navbar";
-import Tweet, { Attribute3 } from "./components/tweet/tweet";
 import { dataTweet } from "./data/dataTweet";
-import RightSection from "./components/rightSection/rightSection";
-import LeftSection from "./components/leftSection/leftSection";
-import CenterSection from "./components/centralSection/centerSection";
 
 class AppContainer extends HTMLElement {
     profiles: Profile[] = [];
@@ -50,7 +45,7 @@ class AppContainer extends HTMLElement {
     render() {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = ``;
-
+    
             const style = document.createElement("style");
             style.textContent = `
                 .container {
@@ -59,60 +54,52 @@ class AppContainer extends HTMLElement {
                 }
                 central-section {
                     flex-grow: 1; /* Hacer que la sección central ocupe el espacio restante */
-                    
                 }
             `;
-
-            // Navbar creation
     
-            const navbar = document.createElement("my-navbar") as Navbar;
+            // Navbar creation
+            const navbar = document.createElement("my-navbar") as NavBar;
             navbar.setAttribute(Attribute2.userlogo, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff");
             navbar.setAttribute(Attribute2.settings, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb");
             navbar.setAttribute(Attribute2.logo, "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=8592d2ae-13df-4a35-8911-83dbac66123b");
         
             // Crear las secciones izquierda y derecha
             const leftSection = document.createElement("left-section") as LeftSection;
-            const centralSection = document.createElement("central-section") as CenterSection;
-            this.rightSection = document.createElement("right-section") as RightSection; // Crear la sección derecha
-
+            const centerSection = document.createElement("center-section") as CenterSection;
+            this.rightSection = document.createElement("right-section") as RightSection;
+    
             // Renderizar tweets en la sección central
             dataTweet.forEach((tweet) => {
                 const tweetCard = this.ownerDocument.createElement("my-tweet") as Tweet;
                 tweetCard.setAttribute(Attribute3.text, String(tweet.text));
                 tweetCard.setAttribute(Attribute3.username, String(tweet.username));
                 tweetCard.setAttribute(Attribute3.image, String(tweet.image));
-                centralSection.appendChild(tweetCard);
+                centerSection.appendChild(tweetCard);
             });
-
-            // Pasar los perfiles al RightSection como atributos
-            dataProfiles.forEach(profile => {
-                const profileCard = this.ownerDocument.createElement("my-profile") as Profile;
-                profileCard.setAttribute(Attribute.name, profile.name);
-                profileCard.setAttribute(Attribute.uid, String(profile.uid));
-                profileCard.setAttribute(Attribute.image, profile.avatar);
-                this.rightSection.appendChild(profileCard); // Añadir el perfil directamente a RightSection
-            });
-
+    
+            // Pasar los perfiles a RightSection
+            this.rightSection.setProfiles(this.profiles);
+    
             // Append components to shadowRoot
             this.shadowRoot?.appendChild(style);
-
-             // Crear contenedor para el navbar
+    
+            // Crear contenedor para el navbar
             const navbarContainer = document.createElement("nav");
             navbarContainer.setAttribute("class", "navbarContainer");
             navbarContainer.appendChild(navbar);
-
+    
             // Crear contenedor para las secciones
             const container = document.createElement("div");
             container.setAttribute("class", "container");
             container.appendChild(leftSection);
-            container.appendChild(centralSection);
+            container.appendChild(centerSection);
             container.appendChild(this.rightSection); // Añadir la sección derecha al contenedor
-
+    
             this.shadowRoot?.appendChild(navbarContainer);
             this.shadowRoot?.appendChild(container);
-
         }
     }
+    
 }
 
 customElements.define("app-container", AppContainer);
