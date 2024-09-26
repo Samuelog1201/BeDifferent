@@ -25,17 +25,28 @@ class RightSection extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-                    .user-list {
-                        display: ${this.userListVisible ? 'block' : 'none'};
-                        background-color: #f8f9fa;
+
+                    section {
                         padding: 10px;
-                        width: 250px;
+                        width: 350px;
                         z-index: 1000;
                         
                     }
+
+                    .user-list {
+                        display: ${this.userListVisible ? 'block' : 'none'};
+                        background-color: #f8f9fa;
+                        text-align: right;
+                        padding: 10px;
+                            
+                    }
+                                               
+                    }
                 </style>
-                <div class="user-list">
-                </div>
+                <section>
+                    <div class="user-list">
+                    </div>
+                </section>
             `;
 
             const userList = this.shadowRoot.querySelector('.user-list');

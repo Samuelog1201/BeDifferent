@@ -7,7 +7,7 @@ export const dataProfiles = [
    {
        uid: 2,
        name: "Patitas de Limón",
-       avatar: "https://images.vexels.com/content/143176/preview/lemon-color-icon-5017f6.png",
+       avatar: "https://cdn1.iconfinder.com/data/icons/fruit-cartoon-flat-cute-fruity/512/lemon-512.png",
    },
    {
        uid: 3,

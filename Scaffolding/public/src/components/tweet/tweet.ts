@@ -39,6 +39,8 @@ class Tweet extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
             <style>
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
                 section {
                     display: flex; /* O usa display: grid; */
                     justify-content: center;
@@ -53,6 +55,12 @@ class Tweet extends HTMLElement {
                 h1 {
                     font-size: 1.2em;
                     margin: 5px 0;
+                    font-family: "Rubik", sans-serif;
+                     font-style: bold;
+                }
+                
+                p {
+                    font-family: "Rubik", sans-serif;
                 }
                 img {
                     max-width: 100%; /* Asegura que la imagen no se desborde */
@@ -67,7 +75,6 @@ class Tweet extends HTMLElement {
                     <h1>${this.username}</h1>
                     <p>${this.text}</p>
                     <img id="image-upload" src="${this.image}" alt="image upload">
-                    <hr> </hr>
                 </div>         
 
             </section>
