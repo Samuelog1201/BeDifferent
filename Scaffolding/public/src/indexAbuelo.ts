@@ -16,14 +16,14 @@ class AppContainer extends HTMLElement {
             const profileCard = this.ownerDocument.createElement("my-profile") as Profile;
             profileCard.setAttribute(Attribute.name, user.name);
             profileCard.setAttribute(Attribute.uid, String(user.uid));
-            profileCard.setAttribute(Attribute.image, String(user.avatar));
+            profileCard.setAttribute(Attribute.avatar, String(user.avatar));
             this.profiles.push(profileCard);
         });
     }
 
     connectedCallback() {
         this.render();
-        this.addNavbarEventListener();  // Asegúrate de que rightSection esté inicializada
+        this.addNavbarEventListener();
     }
 
     addNavbarEventListener() {
@@ -47,7 +47,8 @@ class AppContainer extends HTMLElement {
             // Crear estilos
             const style = document.createElement("style");
             style.textContent = `
-                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
                 .container {
                     display: flex;  /* Usar flex para las secciones */
                     margin: 10px;

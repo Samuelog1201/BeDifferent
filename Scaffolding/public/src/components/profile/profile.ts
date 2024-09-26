@@ -1,17 +1,17 @@
 export enum Attribute {
-    "image" = "image",
+    "avatar" = "avatar",
     "name" = "name",
     "uid" = "uid",
 }
 
 class Profile extends HTMLElement {
-    image?: string;
+    avatar?: string;
     name?: string;
     uid?: number;
 
     static get observedAttributes() {
         const attrs: Record<Attribute, null> = {
-            image: null,
+            avatar: null,
             name: null,
             uid: null,
         };
@@ -48,10 +48,43 @@ class Profile extends HTMLElement {
                 width: 50px; 
                 height: 50px; 
             }
+
+            section {
+                display: flex;
+                justify-content: right;
+                align-items: right;
+                flex-direction: column;
+                background-color: #f8f9fa;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            }
+
+            .info-perfil{
+            display: flex;
+            align-items: center; /* Alinea verticalmente al centro */
+            justify-content: flex-end; /* Alinea todo a la derecha *
+
+            }
+            #icono-perfil {
+                margin-right: 20px; /* Espacio entre el ícono y el nombre */
+              }
+
+            h1 {
+                font-family: "League Gothic", sans-serif;
+                font-style: bold;
+            }
+
+            p {
+                font-family: "Rubik", sans-serif;
+            }
+
             </style>
             <section>
-                <img src="${this.image}" alt="">
+            <div class= "info-perfil">
+                <img id "icono-perfil" src="${this.avatar}" alt=""> 
                 <h1>${this.name}</h1>
+            </div>
                 <p>ID: ${this.uid}</p>
             </section>
             `;

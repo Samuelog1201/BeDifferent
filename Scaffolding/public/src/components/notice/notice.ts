@@ -41,7 +41,7 @@ class Notice extends HTMLElement {
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
                 section {
-                    display: flex; /* O usa display: grid; */
+                    display: flex;
                     justify-content: left;
                     align-items: left;
                     flex-direction: column;

@@ -1,5 +1,6 @@
 import Tweet, { Attribute3 } from '../tweet/tweet'; 
-import { dataTweet } from '../indexPadre';
+import { Attribute, dataTweet, dataProfiles } from '../indexPadre';
+
 
 class CenterSection extends HTMLElement {
     constructor() {
@@ -40,16 +41,18 @@ class CenterSection extends HTMLElement {
             const tweetList = this.shadowRoot.querySelector('.tweet-list');
 
             // Renderiza los tweets recibidos del array dataTweet
-            dataTweet.forEach(tweet => {
+            dataTweet.forEach (tweet => {
                 const tweetCard = document.createElement("my-tweet") as Tweet;
                 tweetCard.setAttribute(Attribute3.username, tweet.username);
                 tweetCard.setAttribute(Attribute3.text, tweet.text);
                 tweetCard.setAttribute(Attribute3.image, tweet.image);
                 tweetList?.appendChild(tweetCard); // Añade el tweet a la lista
             });
+
         }
     }
 }
+
 
 customElements.define("center-section", CenterSection);
 export default CenterSection;

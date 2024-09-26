@@ -56,7 +56,7 @@ class RightSection extends HTMLElement {
                 const profileCard = document.createElement("my-profile") as Profile;
                 profileCard.setAttribute(Attribute.name, profile.getAttribute(Attribute.name)!);
                 profileCard.setAttribute(Attribute.uid, profile.getAttribute(Attribute.uid)!);
-                profileCard.setAttribute(Attribute.image, profile.getAttribute(Attribute.image)!);
+                profileCard.setAttribute(Attribute.avatar, profile.getAttribute(Attribute.avatar)!);
                 userList?.appendChild(profileCard); // Añadir el perfil a la lista
             });
         }

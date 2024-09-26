@@ -1,14 +1,16 @@
+import Profile, { Attribute } from "../profile/profile";
 export enum Attribute3 {
     "username" = "username",
     "text" = "text",
     "image" = "image",
+    "avatar" = "avatar",
 }
 
 class Tweet extends HTMLElement {
     username?: string;
     text?: string;
     image?: string;
-
+    avatar?: string;
     
 
     constructor() {
@@ -17,7 +19,7 @@ class Tweet extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [Attribute3.username, Attribute3.text, Attribute3.image];
+        return [Attribute3.username, Attribute3.text, Attribute3.image, Attribute.avatar] ;
     }
 
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
@@ -31,6 +33,9 @@ class Tweet extends HTMLElement {
             case Attribute3.image:
                 this.image = newValue;
                 break;
+            case Attribute3.image:
+                    this.image = newValue;
+                    break;
         }
         this.render();
     }
@@ -39,8 +44,6 @@ class Tweet extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
                 section {
                     display: flex; /* O usa display: grid; */
                     justify-content: center;
@@ -53,7 +56,7 @@ class Tweet extends HTMLElement {
             
                 }
                 h1 {
-                    font-size: 1.2em;
+                    font-size: 1.5em;
                     margin: 5px 0;
                     font-family: "Rubik", sans-serif;
                      font-style: bold;
@@ -61,6 +64,7 @@ class Tweet extends HTMLElement {
                 
                 p {
                     font-family: "Rubik", sans-serif;
+                    font-size: 1em;
                 }
                 img {
                     max-width: 100%; /* Asegura que la imagen no se desborde */
@@ -71,12 +75,14 @@ class Tweet extends HTMLElement {
                 }
             </style>
             <section>
-                <div>
+            <div>
+                <div class= "info-perfil">
                     <h1>${this.username}</h1>
-                    <p>${this.text}</p>
-                    <img id="image-upload" src="${this.image}" alt="image upload">
+                    <img id "icono-perfil" src="${this.avatar}" alt=""> 
                 </div>         
-
+                <p>${this.text}</p>
+                <img id="image-upload" src="${this.image}" alt="image upload">
+            </div>
             </section>
         `;
     }
