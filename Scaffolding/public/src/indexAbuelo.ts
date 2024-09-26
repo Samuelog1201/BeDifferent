@@ -1,8 +1,7 @@
 import * as components from "./components/indexPadre";
-import { Profile, NavBar, LeftSection, RightSection, Tweet, CenterSection } from "./components/indexPadre";
-import { Attribute, Attribute2, Attribute3 } from "./components/indexPadre";
-import { dataProfiles } from "./data/dataProfiles";
-import { dataTweet } from "./data/dataTweet";
+import { Profile, NavBar, LeftSection, RightSection, Tweet, CenterSection, Notice } from "./components/indexPadre";
+import { Attribute, Attribute2, Attribute3, Attribute4 } from "./components/indexPadre";
+import { dataProfiles, dataTweet, dataNotices } from "./components/indexPadre";
 
 class AppContainer extends HTMLElement {
     profiles: Profile[] = [];
@@ -69,14 +68,6 @@ class AppContainer extends HTMLElement {
             const centerSection = document.createElement("center-section") as CenterSection;
             this.rightSection = document.createElement("right-section") as RightSection;
 
-            // Renderizar los tweets dentro de CenterSection
-            dataTweet.forEach((tweet) => {
-                const tweetCard = this.ownerDocument.createElement("my-tweet") as Tweet;
-                tweetCard.setAttribute(Attribute3.text, String(tweet.text));
-                tweetCard.setAttribute(Attribute3.username, String(tweet.username));
-                tweetCard.setAttribute(Attribute3.image, String(tweet.image));
-                centerSection.appendChild(tweetCard);
-            });
 
             // Pasar los perfiles a RightSection
             this.rightSection.setProfiles(this.profiles);

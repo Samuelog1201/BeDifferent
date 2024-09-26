@@ -1,3 +1,6 @@
+import { dataNotices } from "../indexPadre";
+import Notice, { Attribute4 } from "../notice/notice"
+
 class LeftSection extends HTMLElement {
     constructor() {
         super();
@@ -12,6 +15,13 @@ class LeftSection extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
+                    /* Estilos del componente */
+                    .notice-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                    }
+
                     h1 {
                         font-family: "Rubik", sans-serif;
                     }
@@ -19,23 +29,35 @@ class LeftSection extends HTMLElement {
                     p {
                         font-family: "Rubik", sans-serif;
                     }
+
                     section {
-                        width: 350px;
-                        background-color: #f8f9fa;
                         padding: 10px;
-                        height: 100vh; /* Altura completa */
+                        width: 350px;
+                        z-index: 1000;
                     }
-                    img {
-                    max-width: 100%; 
-                    }
+                    
+                    
                 </style>
-                <section>
-                    <h1>Noticias</h1>
-                    <h2> Mr Olympia Cbum </h2>
-                    <p>Christopher Adam Bumstead es un culturista profesional canadiense, miembro oficial de la Federación Internacional de Fisicoculturismo.​ Bumstead es el actual campeón de Mr. Olympia Classic Physique, habiendo ganado la competición en 2019, 2020, 2021, 2022 y 2023. También fue subcampeón en 2017 y 2018.</p>
-                     <img id "noticia-cbum" src="https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/noticia-cbum.jpg?alt=media&token=bed92b52-7fd1-4238-8ec8-caf45daf542c" alt="Noticia">
-                </section>
+
+                <section> 
+                <h1> Ultimas Noticias </h1>
+                <div class="notice-list"> </div>
+                </section> 
+                
+
             `;
+
+            // Selecciona el contenedor donde se insertarán los tweets
+            const noticeList = this.shadowRoot.querySelector('.notice-list');
+
+            // Renderiza las noticias recibidas del array dataNotice
+            dataNotices.forEach(notice => {
+                const noticeCard = document.createElement("my-notice") as Notice;
+                noticeCard.setAttribute(Attribute4.titleNotice, notice.titleNotice);
+                noticeCard.setAttribute(Attribute4.textNotice, notice.textNotice);
+                noticeCard.setAttribute(Attribute4.imageNotice, notice.imageNotice);
+                noticeList?.appendChild(noticeCard); // Añade la noticia a la lista
+            });
         }
     }
 }
