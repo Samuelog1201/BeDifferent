@@ -33,7 +33,9 @@ class AppContainer extends HTMLElement {
 
                 .container {
                     display: flex;  
-                    margin: 10px;
+                    background-image:   opacity: 100%,
+                    url("https://s0.smartresize.com/wallpaper/928/844/HD-wallpaper-motivation-fitness-workout-dark-ultra-sports-fitness-dark-motivation-workout.jpg");
+
                 }
 
                 center-section {

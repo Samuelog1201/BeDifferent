@@ -47,11 +47,12 @@ class RightSection extends HTMLElement {
                         padding: 10px;
                     }
                     .user-list {
-                        display: ${this.userListVisible ? 'block' : 'none'};
+                        display: ${this.userListVisible ? 'flex' : 'none'};
                         text-align: right;
                         padding: 10px;
                         flex-direction: column;
-                        gap: 15px;
+                        gap: 10px; 
+                        weight: 20%
                         justify-content: end;
                     }
                     my-profile {
@@ -61,8 +62,15 @@ class RightSection extends HTMLElement {
                         display: ${this.userListVisible ? 'block' : 'none'};
                         font-family: "Rubik", sans-serif;
                         text-align: center;
+                        font-sixe: 1em;
+                    }
+
+                    p {
+                        margin: 0px;
                     }
                     .titulo-amigos {
+                        display: flex;
+                        justify-content: end;
                         padding: 10px;
                         
                     }
@@ -96,8 +104,11 @@ class RightSection extends HTMLElement {
                     }
 
                     .toggle-button {
+                        display: flex;
+                        align-items: center; /* Centra verticalmente */
+                        justify-content: center; /* Centra horizontalmente */
                         padding: 10px 20px; /* Espaciado interno del botón */
-                        background-color: #808080; /* Color de fondo del botón */
+                        background-color: #D9D9D9; /* Color de fondo del botón */
                         color: white; /* Color del texto */
                         border: none; /* Sin borde */
                         border-radius: 5px; /* Bordes redondeados */
@@ -105,7 +116,6 @@ class RightSection extends HTMLElement {
                         font-size: 1em; /* Tamaño de fuente */
                         cursor: pointer; /* Cursor de mano al pasar sobre el botón */
                         transition: background-color 0.3s; /* Transición suave para el color de fondo */
-                        
                      
                     }
 
@@ -114,11 +124,20 @@ class RightSection extends HTMLElement {
                      background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
                     }
 
+                    #icon-friends {
+                        width: 50px; 
+                        height: 50px; 
+                        padding: 10px;
+                    }
+
                 </style>
-            <div class="titulo-amigos">
-                <button class="toggle-button">Amigos Recomendados</button>
-                <h1>Amigos Recomendados</h1>
+                <div class="titulo-amigos">
+                <button class="toggle-button"> <img id= "icon-friends" src ="https://cdn-icons-png.flaticon.com/512/1946/1946413.png" alt "icon friends" </img>
+                <h1>Recomendados</h1>
+                </button>
+                
             </div>
+        
             <section>
                 <div class="user-list">
                     ${this.profiles.map(profile => {
@@ -131,6 +150,7 @@ class RightSection extends HTMLElement {
                         `;
                     }).join('')}
                 </div>
+                <h1> Amigos: </h1>
                 <div class="friend-list">
                     <div class="friends-container">
                         ${this.friends.map(friend => `

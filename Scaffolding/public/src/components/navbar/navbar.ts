@@ -90,7 +90,7 @@ class Navbar extends HTMLElement {
                     justify-content: space-between;
                     align-items: center;
                     padding: 10px;
-                    background-color: #f8f9fa;
+                    background-color: #D9D9D9;
                     overflow-y: auto;
 
                 }

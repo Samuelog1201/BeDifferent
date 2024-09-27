@@ -31,10 +31,14 @@ class CenterSection extends HTMLElement {
                 gap: 15px;
             }
 
-            h1 {
+            #public {
                 font-family: "Rubik", sans-serif;
                 color: #333; /* Color del título */
+                text-align: center;
+                font-weight: bold;
+                
             }
+
 
             p {
                 font-family: "Rubik", sans-serif;
@@ -91,12 +95,13 @@ class CenterSection extends HTMLElement {
             padding-top: 15px
             }
         </style>
-
+        
         <section>
+                <h1 id = public> PUBLICACIONES: </h1>
             <div class="tweet-input">
                 <textarea id="tweet-text" placeholder="¿Qué estás pensando?" rows="3"></textarea>
                 <input type="text" id="tweet-image" placeholder="URL de la imagen" />
-                <button id="tweet-button">Publicar Tweet</button>
+                <button id="tweet-button">Publicar</button>
             </div>
         </section>
         

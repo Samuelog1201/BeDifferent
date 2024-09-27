@@ -36,7 +36,6 @@ class LeftSection extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-                    /* Estilos del componente */
                     .notice-list {
                         display: flex;
                         flex-direction: column;
@@ -59,7 +58,7 @@ class LeftSection extends HTMLElement {
 
                     button {
                         padding: 10px 20px;
-                        background-color: #808080;
+                        background-color: #D9D9D9;
                         color: white;
                         border: none;
                         border-radius: 5px;
