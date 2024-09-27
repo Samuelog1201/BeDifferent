@@ -86,6 +86,10 @@ class CenterSection extends HTMLElement {
             button:hover {
                 background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
             }
+
+            section {
+            padding-top: 15px
+            }
         </style>
 
         <section>

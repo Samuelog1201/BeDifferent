@@ -5,6 +5,7 @@ import { dataProfiles } from "./components/indexPadre";
 class AppContainer extends HTMLElement {
     private loggedInProfile: { uid: number; name: string; avatar: string } | null = null;  // Perfil del usuario logueado
     private rightSection!: RightSection;  // Cambiar la referencia a rightSection
+    private centerSection!: CenterSection;  // Añadimos una referencia a centerSection
 
     constructor() {
         super();
@@ -32,7 +33,6 @@ class AppContainer extends HTMLElement {
                 .container {
                     display: flex;  /* Usar flex para las secciones */
                     margin: 10px;
-                    
                 }
                 center-section {
                     flex-grow: 1;  /* Hacer que la sección central ocupe el espacio restante */
@@ -47,7 +47,7 @@ class AppContainer extends HTMLElement {
 
             // Crear las secciones izquierda, central y derecha
             const leftSection = document.createElement("left-section") as LeftSection;
-            const centerSection = document.createElement("center-section") as CenterSection;
+            this.centerSection = document.createElement("center-section") as CenterSection;  // Guardamos referencia a CenterSection
             this.rightSection = document.createElement("right-section") as RightSection;
 
             // Crear el componente de perfil a partir del perfil logueado
@@ -69,6 +69,9 @@ class AppContainer extends HTMLElement {
 
             this.rightSection.setProfiles([profileCard, ...otherProfiles]);  // Añadir el perfil logueado y otros perfiles a la lista
 
+            // Pasar el perfil logueado a center-section para que pueda crear tweets
+            this.centerSection.setLoggedInProfile(this.loggedInProfile);
+
             // Añadir el estilo al shadowRoot
             this.shadowRoot.appendChild(style);
 
@@ -81,7 +84,7 @@ class AppContainer extends HTMLElement {
             const container = document.createElement("div");
             container.setAttribute("class", "container");
             container.appendChild(leftSection);
-            container.appendChild(centerSection);
+            container.appendChild(this.centerSection);  // Añadir centerSection con el perfil logueado
             container.appendChild(this.rightSection);  // Añadir la sección derecha al contenedor
 
             // Añadir el navbar y el contenedor al shadowRoot

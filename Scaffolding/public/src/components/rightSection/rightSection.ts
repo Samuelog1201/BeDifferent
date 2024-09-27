@@ -61,6 +61,10 @@ class RightSection extends HTMLElement {
                     }
                     .titulo-amigos {
                         padding: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
                     }
                     .friend-list {
                         margin-top: 20px;
@@ -91,17 +95,26 @@ class RightSection extends HTMLElement {
                     }
 
                     .toggle-button {
-                    background-color: #808080;
-                        color: white;
-                        border: none;
-                        padding: 10px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        margin-bottom: 5px;
+                        padding: 10px 20px; /* Espaciado interno del botón */
+                        background-color: #808080; /* Color de fondo del botón */
+                        color: white; /* Color del texto */
+                        border: none; /* Sin borde */
+                        border-radius: 5px; /* Bordes redondeados */
+                        font-family: "Rubik", sans-serif; /* Fuente */
+                        font-size: 1em; /* Tamaño de fuente */
+                        cursor: pointer; /* Cursor de mano al pasar sobre el botón */
+                        transition: background-color 0.3s; /* Transición suave para el color de fondo */
+                     
                     }
+
+
+                     .toggle-button:hover {
+                     background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
+                    }
+
                 </style>
                 <div class="titulo-amigos">
-                    <button class="toggle-button">Recomendados</button>
+                    <button class="toggle-button"> Amigos Recomendados</button>
                     <h1> Amigos Recomendados </h1>
                 </div>
                 <section>
