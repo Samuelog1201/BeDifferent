@@ -1,16 +1,4 @@
 export const dataTweet = [
-    {
-      username: "Samuelog01",
-        text: "Aiuda pofavoh",
-        image: "https://theironoffice.com/cdn/shop/files/Gym_12.23-19.jpg?v=1701994187&width=3840",
-        avatarTweet: "https://static.vecteezy.com/system/resources/thumbnails/023/959/280/small_2x/transparent-background-with-a-chick-free-png.png"
-     },
-     {
-      username: "Patitas de limón",
-        text:  "Ñammmmmmm",
-        image: "https://img.freepik.com/vector-premium/patito-goma-corazon_65983-216.jpg",
-        avatarTweet: "https://cdn1.iconfinder.com/data/icons/fruit-cartoon-flat-cute-fruity/512/lemon-512.png"
-     },
      {
         username: "Imsonic500",
         text: "Ruanak",
@@ -35,4 +23,17 @@ export const dataTweet = [
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJCo-zYMgLIrHapGx8J5jASagNLtRHHPPqTg&s",
         avatarTweet: "https://cdn-icons-png.flaticon.com/512/2819/2819383.png" 
      },
+     {
+      username: "Patitas de limón",
+        text:  "Ñammmmmmm",
+        image: "https://img.freepik.com/vector-premium/patito-goma-corazon_65983-216.jpg",
+        avatarTweet: "https://cdn1.iconfinder.com/data/icons/fruit-cartoon-flat-cute-fruity/512/lemon-512.png"
+     },
+     {
+      username: "Samuelog01",
+        text: "Aiuda pofavoh",
+        image: "https://theironoffice.com/cdn/shop/files/Gym_12.23-19.jpg?v=1701994187&width=3840",
+        avatarTweet: "https://static.vecteezy.com/system/resources/thumbnails/023/959/280/small_2x/transparent-background-with-a-chick-free-png.png"
+     },
+     
 ];

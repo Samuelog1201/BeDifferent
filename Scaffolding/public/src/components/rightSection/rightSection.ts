@@ -40,7 +40,7 @@ class RightSection extends HTMLElement {
     render() {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
-                <style>
+               <style>
                     section {
                         width: 350px;
                         z-index: 1000;
@@ -50,6 +50,9 @@ class RightSection extends HTMLElement {
                         display: ${this.userListVisible ? 'block' : 'none'};
                         text-align: right;
                         padding: 10px;
+                        flex-direction: column;
+                        gap: 15px;
+                        justify-content: end;
                     }
                     my-profile {
                         padding: 15px;
@@ -61,10 +64,7 @@ class RightSection extends HTMLElement {
                     }
                     .titulo-amigos {
                         padding: 10px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: column;
+                        
                     }
                     .friend-list {
                         margin-top: 20px;
@@ -77,6 +77,7 @@ class RightSection extends HTMLElement {
                         border-radius: 5px;
                         cursor: pointer;
                         margin-bottom: 5px;
+                        
                     }
                     .friend-button:hover {
                         background-color: #4b4b4b;
@@ -104,6 +105,7 @@ class RightSection extends HTMLElement {
                         font-size: 1em; /* Tamaño de fuente */
                         cursor: pointer; /* Cursor de mano al pasar sobre el botón */
                         transition: background-color 0.3s; /* Transición suave para el color de fondo */
+                        
                      
                     }
 
@@ -113,36 +115,38 @@ class RightSection extends HTMLElement {
                     }
 
                 </style>
-                <div class="titulo-amigos">
-                    <button class="toggle-button"> Amigos Recomendados</button>
-                    <h1> Amigos Recomendados </h1>
+            <div class="titulo-amigos">
+                <button class="toggle-button">Amigos Recomendados</button>
+                <h1>Amigos Recomendados</h1>
+            </div>
+            <section>
+                <div class="user-list">
+                    ${this.profiles.map(profile => {
+                        const isFriend = this.friends.includes(profile);
+                        return `
+                            <button class="friend-button" data-uid="${profile.getAttribute(Attribute.uid)}" style="display: ${isFriend ? 'none' : 'block'};">
+                                Agregar ${profile.getAttribute(Attribute.name)}
+                            </button>
+                            <div class="clear"></div> <!-- Limpia el float después del botón -->
+                        `;
+                    }).join('')}
                 </div>
-                <section>
-                    <div class="user-list">
-                        ${this.profiles.map(profile => {
-                            const isFriend = this.friends.includes(profile);
-                            return `
-                                <button class="friend-button" data-uid="${profile.getAttribute(Attribute.uid)}" style="display: ${isFriend ? 'none' : 'block'};">
-                                    Agregar ${profile.getAttribute(Attribute.name)}
-                                </button>
-                            `;
-                        }).join('')}
+                <div class="friend-list">
+                    <div class="friends-container">
+                        ${this.friends.map(friend => `
+                            <my-profile 
+                                uid="${friend.getAttribute(Attribute.uid)}" 
+                                name="${friend.getAttribute(Attribute.name)}" 
+                                avatar="${friend.getAttribute(Attribute.avatar)}">
+                                <button class="remove-button" data-uid="${friend.getAttribute(Attribute.uid)}">Eliminar</button>
+                            </my-profile>
+                            <div class="clear"></div> <!-- Limpia el float después del botón -->
+                        `).join('')}
                     </div>
-                    <div class="friend-list">
-                        <h2>Amigos:</h2>
-                        <div class="friends-container">
-                            ${this.friends.map(friend => `
-                                <my-profile 
-                                    uid="${friend.getAttribute(Attribute.uid)}" 
-                                    name="${friend.getAttribute(Attribute.name)}" 
-                                    avatar="${friend.getAttribute(Attribute.avatar)}">
-                                    <button class="remove-button" data-uid="${friend.getAttribute(Attribute.uid)}">Eliminar</button>
-                                </my-profile>
-                            `).join('')}
-                        </div>
-                    </div>
-                </section>
-            `;
+                </div>
+            </section>
+        `;
+        
 
             const friendButtons = this.shadowRoot.querySelectorAll('.friend-button');
             friendButtons.forEach(button => {

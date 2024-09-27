@@ -30,14 +30,36 @@ class AppContainer extends HTMLElement {
             style.textContent = `
                 @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
                 @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
                 .container {
-                    display: flex;  /* Usar flex para las secciones */
+                    display: flex;  
                     margin: 10px;
                 }
+
                 center-section {
-                    flex-grow: 1;  /* Hacer que la sección central ocupe el espacio restante */
+                    flex-grow: 1;  
+                }
+
+                @media (max-width: 768px) {  /* Ajusta el valor según el tamaño deseado */
+                    .container {
+                        display: flex;
+                        flex-direction: column; /* Organiza las secciones en columna para pantallas pequeñas */
+                    }
+
+                    center-section {
+                        order: 1;  /* Primero el centro */
+                    }
+
+                    right-section {
+                        order: 2;  /* Luego la derecha */
+                    }
+
+                    left-section {
+                        order: 3;  /* Finalmente la izquierda */
+                    }
                 }
             `;
+
 
             // Navbar creation
             const navbar = document.createElement("my-navbar") as NavBar;

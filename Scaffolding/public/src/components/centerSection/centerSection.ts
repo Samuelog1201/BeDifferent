@@ -99,6 +99,7 @@ class CenterSection extends HTMLElement {
                 <button id="tweet-button">Publicar Tweet</button>
             </div>
         </section>
+        
         <div class="tweet-list"></div>
         `;
 
@@ -147,8 +148,8 @@ class CenterSection extends HTMLElement {
 
             console.log("Tweets a renderizar:", dataTweet);
 
-            // Renderiza los tweets recibidos del array dataTweet
-            dataTweet.forEach((tweet) => {
+            // Renderiza los tweets recibidos del array dataTweet en orden inverso
+            dataTweet.slice().reverse().forEach((tweet) => {
                 const tweetCard = document.createElement("my-tweet") as Tweet;
                 tweetCard.setAttribute(Attribute3.name, tweet.username);
                 tweetCard.setAttribute(Attribute3.text, tweet.text);
