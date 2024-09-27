@@ -12,7 +12,7 @@ export const dataNotices = [
 
     {
         titleNotice: "Patito visto en el Gym",
-        textNotice: "Se sospecha que sopitas estuvo redondeando el gimnasio del Cali",
+        textNotice: "Se sospecha que sopitas estuvo redondeando un gimnasio de Cali",
         imageNotice: "https://img.freepik.com/vector-premium/pato-lindo-bebe-haciendo-ejercicio-yoga-caracter-pajaro-divertido-pose-loto-aislado-fondo-deporte-fitness_97231-1760.jpg"
     },
 ]

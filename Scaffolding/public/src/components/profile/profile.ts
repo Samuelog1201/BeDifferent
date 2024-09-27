@@ -66,7 +66,7 @@ class Profile extends HTMLElement {
             justify-content: flex-end; /* Alinea todo a la derecha *
 
             }
-            #icono-perfil {
+            #icono-perfil-amigos {
                 margin-right: 20px; /* Espacio entre el ícono y el nombre */
               }
 
@@ -77,12 +77,13 @@ class Profile extends HTMLElement {
 
             p {
                 font-family: "Rubik", sans-serif;
+                
             }
 
             </style>
             <section>
             <div class= "info-perfil">
-                <img id "icono-perfil" src="${this.avatar}" alt=""> 
+                <img id="icono-perfil-amigos" src="${this.avatar}" alt=""> 
                 <h1>${this.name}</h1>
             </div>
                 <p>ID: ${this.uid}</p>

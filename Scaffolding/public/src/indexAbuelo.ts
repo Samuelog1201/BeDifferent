@@ -1,57 +1,38 @@
-import * as components from "./components/indexPadre";
-import { Profile, NavBar, LeftSection, RightSection, Tweet, CenterSection, Notice } from "./components/indexPadre";
-import { Attribute, Attribute2, Attribute3, Attribute4 } from "./components/indexPadre";
-import { dataProfiles, dataTweet, dataNotices } from "./components/indexPadre";
+import { Profile, NavBar, LeftSection, RightSection, CenterSection, LoginSection } from "./components/indexPadre";
+import { Attribute, Attribute2 } from "./components/indexPadre";
+import { dataProfiles } from "./components/indexPadre";
 
 class AppContainer extends HTMLElement {
-    profiles: Profile[] = [];
+    private loggedInProfile: { uid: number; name: string; avatar: string } | null = null;  // Perfil del usuario logueado
     private rightSection!: RightSection;  // Cambiar la referencia a rightSection
 
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-
-        // Inicializar los perfiles
-        dataProfiles.forEach((user) => {
-            const profileCard = this.ownerDocument.createElement("my-profile") as Profile;
-            profileCard.setAttribute(Attribute.name, user.name);
-            profileCard.setAttribute(Attribute.uid, String(user.uid));
-            profileCard.setAttribute(Attribute.avatar, String(user.avatar));
-            this.profiles.push(profileCard);
-        });
     }
 
     connectedCallback() {
         this.render();
-        this.addNavbarEventListener();
     }
 
-    addNavbarEventListener() {
-        const navbar = this.shadowRoot?.querySelector("my-navbar");
-        if (navbar) {
-            navbar.addEventListener('toggle-user-list', () => {
-                console.log("Toggling user list visibility from AppContainer");
-                if (this.rightSection) {
-                    this.rightSection.toggleUserList();  // Solo afecta a rightSection
-                } else {
-                    console.error("rightSection is not initialized yet");
-                }
-            });
-        }
+    handleLogin(profile: { uid: number; name: string; avatar: string }) {
+        this.loggedInProfile = profile; // Asignar el perfil logueado
+        this.render(); // Renderizar la aplicación principal después del login
     }
 
-    render() {
-        if (this.shadowRoot) {
+    renderApp() {
+        if (this.shadowRoot && this.loggedInProfile) {
             this.shadowRoot.innerHTML = ``;  // Limpiar el shadowRoot
 
             // Crear estilos
             const style = document.createElement("style");
             style.textContent = `
-            @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
                 .container {
                     display: flex;  /* Usar flex para las secciones */
                     margin: 10px;
+                    
                 }
                 center-section {
                     flex-grow: 1;  /* Hacer que la sección central ocupe el espacio restante */
@@ -69,9 +50,24 @@ class AppContainer extends HTMLElement {
             const centerSection = document.createElement("center-section") as CenterSection;
             this.rightSection = document.createElement("right-section") as RightSection;
 
+            // Crear el componente de perfil a partir del perfil logueado
+            const profileCard = this.ownerDocument.createElement("my-profile") as Profile;
+            profileCard.setAttribute(Attribute.name, this.loggedInProfile.name);
+            profileCard.setAttribute(Attribute.uid, String(this.loggedInProfile.uid));
+            profileCard.setAttribute(Attribute.avatar, String(this.loggedInProfile.avatar));
 
-            // Pasar los perfiles a RightSection
-            this.rightSection.setProfiles(this.profiles);
+            // Pasar todos los perfiles excepto el logueado a RightSection
+            const otherProfiles = dataProfiles
+                .filter(profile => profile.uid !== this.loggedInProfile?.uid)
+                .map(profile => {
+                    const otherProfileCard = this.ownerDocument.createElement("my-profile") as Profile;
+                    otherProfileCard.setAttribute(Attribute.name, profile.name);
+                    otherProfileCard.setAttribute(Attribute.uid, String(profile.uid));
+                    otherProfileCard.setAttribute(Attribute.avatar, String(profile.avatar));
+                    return otherProfileCard; // Devolver la instancia de Profile
+                });
+
+            this.rightSection.setProfiles([profileCard, ...otherProfiles]);  // Añadir el perfil logueado y otros perfiles a la lista
 
             // Añadir el estilo al shadowRoot
             this.shadowRoot.appendChild(style);
@@ -91,6 +87,18 @@ class AppContainer extends HTMLElement {
             // Añadir el navbar y el contenedor al shadowRoot
             this.shadowRoot.appendChild(navbarContainer);
             this.shadowRoot.appendChild(container);
+        }
+    }
+
+    render() {
+        if (this.shadowRoot) { // Asegúrate de que shadowRoot no sea nulo
+            if (this.loggedInProfile) {
+                this.renderApp();  // Si el usuario está logueado, renderiza la aplicación
+            } else {
+                const loginSection = new LoginSection((profile) => this.handleLogin(profile));
+                this.shadowRoot.innerHTML = '';  // Limpiar el shadowRoot
+                this.shadowRoot.appendChild(loginSection); // Añadir la sección de login al shadowRoot
+            }
         }
     }
 }

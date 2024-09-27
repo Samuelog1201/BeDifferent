@@ -1,3 +1,5 @@
+import LoginSection from "./loginSection/LoginSection"
+
 export {default as Profile} from "./profile/profile"
 export {default as NavBar} from "./navbar/navbar"
 export {default as LeftSection} from "./leftSection/leftSection"
@@ -12,3 +14,4 @@ export { Attribute4 } from "./notice/notice"
 export { dataTweet }  from "../data/dataTweet"
 export { dataNotices } from "../data/dataNotices"
 export { dataProfiles } from "../data/dataProfiles"
+export {default as LoginSection} from "./loginSection/LoginSection"

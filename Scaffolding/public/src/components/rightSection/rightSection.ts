@@ -3,6 +3,7 @@ import Profile, { Attribute } from "../profile/profile";
 class RightSection extends HTMLElement {
     private userListVisible: boolean = false;
     private profiles: Profile[] = []; // Arreglo para almacenar los perfiles
+    private friends: Profile[] = []; // Arreglo para almacenar los amigos
 
     constructor() {
         super();
@@ -11,6 +12,7 @@ class RightSection extends HTMLElement {
 
     // Función para recibir y almacenar los perfiles
     setProfiles(profiles: Profile[]) {
+        console.log("Perfiles recibidos en setProfiles:", profiles); // Para depuración
         this.profiles = profiles;
         this.render(); // Vuelve a renderizar después de recibir los perfiles
     }
@@ -21,44 +23,139 @@ class RightSection extends HTMLElement {
         this.render(); // Renderizar después de alternar la visibilidad
     }
 
+    addFriend(profile: Profile) {
+        if (!this.friends.includes(profile)) {
+            this.friends.push(profile);
+            console.log("Amigos actualizados:", this.friends); // Para depuración
+            this.render(); // Re-renderiza después de agregar el amigo
+        }
+    }
+
+    removeFriend(profile: Profile) {
+        this.friends = this.friends.filter(friend => friend !== profile);
+        console.log("Amigos después de eliminar:", this.friends); // Para depuración
+        this.render(); // Re-renderiza después de eliminar el amigo
+    }
+
     render() {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-
                     section {
-                        padding: 10px;
                         width: 350px;
                         z-index: 1000;
-                        
+                        padding: 10px;
                     }
-
                     .user-list {
                         display: ${this.userListVisible ? 'block' : 'none'};
-                        background-color: #f8f9fa;
                         text-align: right;
                         padding: 10px;
-                            
                     }
-                                               
+                    my-profile {
+                        padding: 15px;
+                    }
+                    h1 {
+                        display: ${this.userListVisible ? 'block' : 'none'};
+                        font-family: "Rubik", sans-serif;
+                        text-align: center;
+                    }
+                    .titulo-amigos {
+                        padding: 10px;
+                    }
+                    .friend-list {
+                        margin-top: 20px;
+                    }
+                    .friend-button {
+                        background-color: #808080;
+                        color: white;
+                        border: none;
+                        padding: 10px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-bottom: 5px;
+                    }
+                    .friend-button:hover {
+                        background-color: #4b4b4b;
+                    }
+                    .remove-button {
+                        background-color: #d9534f; /* Color para el botón de eliminar */
+                        margin-left: 10px;
+                        border: none;
+                        color: white;
+                        padding: 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+                    .remove-button:hover {
+                        background-color: #c9302c; /* Color al pasar el cursor */
+                    }
+
+                    .toggle-button {
+                    background-color: #808080;
+                        color: white;
+                        border: none;
+                        padding: 10px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-bottom: 5px;
                     }
                 </style>
+                <div class="titulo-amigos">
+                    <button class="toggle-button">Recomendados</button>
+                    <h1> Amigos Recomendados </h1>
+                </div>
                 <section>
                     <div class="user-list">
+                        ${this.profiles.map(profile => {
+                            const isFriend = this.friends.includes(profile);
+                            return `
+                                <button class="friend-button" data-uid="${profile.getAttribute(Attribute.uid)}" style="display: ${isFriend ? 'none' : 'block'};">
+                                    Agregar ${profile.getAttribute(Attribute.name)}
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="friend-list">
+                        <h2>Amigos:</h2>
+                        <div class="friends-container">
+                            ${this.friends.map(friend => `
+                                <my-profile 
+                                    uid="${friend.getAttribute(Attribute.uid)}" 
+                                    name="${friend.getAttribute(Attribute.name)}" 
+                                    avatar="${friend.getAttribute(Attribute.avatar)}">
+                                    <button class="remove-button" data-uid="${friend.getAttribute(Attribute.uid)}">Eliminar</button>
+                                </my-profile>
+                            `).join('')}
+                        </div>
                     </div>
                 </section>
             `;
 
-            const userList = this.shadowRoot.querySelector('.user-list');
-
-            // Renderizar los perfiles recibidos
-            this.profiles.forEach(profile => {
-                const profileCard = document.createElement("my-profile") as Profile;
-                profileCard.setAttribute(Attribute.name, profile.getAttribute(Attribute.name)!);
-                profileCard.setAttribute(Attribute.uid, profile.getAttribute(Attribute.uid)!);
-                profileCard.setAttribute(Attribute.avatar, profile.getAttribute(Attribute.avatar)!);
-                userList?.appendChild(profileCard); // Añadir el perfil a la lista
+            const friendButtons = this.shadowRoot.querySelectorAll('.friend-button');
+            friendButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const uid = button.getAttribute('data-uid');
+                    const profileToAdd = this.profiles.find(profile => profile.getAttribute(Attribute.uid) === uid);
+                    if (profileToAdd) {
+                        this.addFriend(profileToAdd); // Agrega el perfil a la lista de amigos
+                        (button as HTMLButtonElement).style.display = 'none'; // Oculta el botón de agregar
+                    }
+                });
             });
+
+            const removeButtons = this.shadowRoot.querySelectorAll('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const uid = button.getAttribute('data-uid');
+                    const profileToRemove = this.friends.find(friend => friend.getAttribute(Attribute.uid) === uid);
+                    if (profileToRemove) {
+                        this.removeFriend(profileToRemove); // Elimina el perfil de la lista de amigos
+                    }
+                });
+            });
+
+            const toggleButton = this.shadowRoot.querySelector('.toggle-button') as HTMLButtonElement;
+            toggleButton.addEventListener('click', () => this.toggleUserList());
         }
     }
 
