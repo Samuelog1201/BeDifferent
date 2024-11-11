@@ -42,7 +42,95 @@ class RightSection extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-                    /* Aquí van los estilos */
+                    section {
+                        width: 350px;
+                        z-index: 1000;
+                        padding: 10px;
+                    }
+                    .user-list {
+                        display: ${this.userListVisible ? 'flex' : 'none'};
+                        text-align: right;
+                        padding: 10px;
+                        flex-direction: column;
+                        gap: 10px; 
+                        weight: 20%
+                        justify-content: end;
+                    }
+                    my-profile {
+                        padding: 15px;
+                    }
+                    h1 {
+                        display: ${this.userListVisible ? 'block' : 'none'};
+                        font-family: "Rubik", sans-serif;
+                        text-align: center;
+                        font-sixe: 1em;
+                    }
+
+                    p {
+                        margin: 0px;
+                    }
+                    .titulo-amigos {
+                        display: flex;
+                        justify-content: end;
+                        padding: 10px;
+                        
+                    }
+                    .friend-list {
+                        margin-top: 20px;
+                    }
+                    .friend-button {
+                        background-color: #808080;
+                        color: white;
+                        border: none;
+                        padding: 10px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-bottom: 5px;
+                        
+                    }
+                    .friend-button:hover {
+                        background-color: #4b4b4b;
+                    }
+                    .remove-button {
+                        background-color: #d9534f; /* Color para el botón de eliminar */
+                        margin-left: 10px;
+                        border: none;
+                        color: white;
+                        padding: 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+                    .remove-button:hover {
+                        background-color: #c9302c; /* Color al pasar el cursor */
+                    }
+
+                    .toggle-button {
+                        display: flex;
+                        align-items: center; /* Centra verticalmente */
+                        justify-content: center; /* Centra horizontalmente */
+                        padding: 10px 20px; /* Espaciado interno del botón */
+                        background-color: #D9D9D9; /* Color de fondo del botón */
+                        color: white; /* Color del texto */
+                        border: none; /* Sin borde */
+                        border-radius: 5px; /* Bordes redondeados */
+                        font-family: "Rubik", sans-serif; /* Fuente */
+                        font-size: 1em; /* Tamaño de fuente */
+                        cursor: pointer; /* Cursor de mano al pasar sobre el botón */
+                        transition: background-color 0.3s; /* Transición suave para el color de fondo */
+                     
+                    }
+
+
+                     .toggle-button:hover {
+                     background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
+                    }
+
+                    #icon-friends {
+                        width: 50px; 
+                        height: 50px; 
+                        padding: 10px;
+                    }
+
                 </style>
                 <div class="titulo-amigos">
                     <button class="toggle-button">

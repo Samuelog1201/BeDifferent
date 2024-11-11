@@ -69,7 +69,40 @@ class AppContainer extends HTMLElement {
             this.shadowRoot.innerHTML = '';
 
             const style = document.createElement("style");
-            style.textContent = `/* Estilos aquí */`;
+            style.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+                .container {
+                    display: flex;  
+                    background-image:   opacity: 100%,
+                    url("https://s0.smartresize.com/wallpaper/928/844/HD-wallpaper-motivation-fitness-workout-dark-ultra-sports-fitness-dark-motivation-workout.jpg");
+
+                }
+
+                center-section {
+                    flex-grow: 1;  
+                }
+
+                @media (max-width: 768px) {  /* Ajusta el valor según el tamaño deseado */
+                    .container {
+                        display: flex;
+                        flex-direction: column; /* Organiza las secciones en columna para pantallas pequeñas */
+                    }
+
+                    center-section {
+                        order: 1;  /* Primero el centro */
+                    }
+
+                    right-section {
+                        order: 2;  /* Luego la derecha */
+                    }
+
+                    left-section {
+                        order: 3;  /* Finalmente la izquierda */
+                    }
+                }
+            `;
 
             const navbar = document.createElement("my-navbar") as NavBar;
             navbar.setAttribute(AttributeProfile.avatar, "https://...");

@@ -21,43 +21,76 @@ class CenterSection extends HTMLElement {
         const shadowRoot = this.shadowRoot;
         if (shadowRoot) {
             shadowRoot.innerHTML = `
-            <style>
-                /* Estilos del componente */
+                <style>
+                /* Estilos del componente central */
                 .tweet-list {
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
                 }
+
+                #public {
+                    font-family: "Rubik", sans-serif;
+                    color: #333; /* Color del título */
+                    text-align: center;
+                    font-weight: bold;
+                    
+                }
+
+
+                p {
+                    font-family: "Rubik", sans-serif;
+                    color: #555; /* Color del texto */
+                }
+
                 .tweet-input {
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
-                    margin-bottom: 20px;
+                    align-items: center;
+                    width: 100%; /* Ocupa todo el ancho disponible */
+                    max-width: 500px; /* Ancho máximo para los inputs */
+                    margin: 0 auto; /* Centra el contenedor */
+                    padding: 15px; /* Espaciado interno */
+                    background-color: #f9f9f9; /* Fondo claro */
+                    border-radius: 10px; /* Bordes redondeados */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
                 }
-                #tweet-text {
-                    resize: none;
-                    padding: 10px;
-                    font-size: 1em;
-                    border-radius: 5px;
-                    border: 1px solid #ccc;
+
+                textarea, input[type="text"] {
+                    width: 100%; /* Ancho completo */
+                    padding: 10px; /* Espaciado interno */
+                    border: 1px solid #ccc; /* Borde gris claro */
+                    border-radius: 5px; /* Bordes redondeados */
+                    font-family: "Rubik", sans-serif; /* Fuente */
+                    font-size: 1em; /* Tamaño de fuente */
+                    resize: none; /* Evita el redimensionamiento manual en textarea */
+                    overflow: hidden; /* Evita barras de desplazamiento en textarea */
                 }
-                #tweet-image {
-                    padding: 10px;
-                    font-size: 1em;
-                    border-radius: 5px;
-                    border: 1px solid #ccc;
+
+                textarea:focus, input[type="text"]:focus {
+                    border-color: #9c9c9c; /* Color del borde al enfocar */
+                    outline: none; /* Quitar el contorno por defecto */
                 }
-                #tweet-button {
-                    padding: 10px;
-                    font-size: 1.2em;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 5px;
+
+                button {
+                    padding: 10px 20px; /* Espaciado interno del botón */
+                    background-color: #808080; /* Color de fondo del botón */
+                    color: white; /* Color del texto */
+                    border: none; /* Sin borde */
+                    border-radius: 5px; /* Bordes redondeados */
+                    font-family: "Rubik", sans-serif; /* Fuente */
+                    font-size: 1em; /* Tamaño de fuente */
+                    cursor: pointer; /* Cursor de mano al pasar sobre el botón */
+                    transition: background-color 0.3s; /* Transición suave para el color de fondo */
                 }
-                #tweet-button:disabled {
-                    background-color: #ccc;
+
+                button:hover {
+                    background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
+                }
+
+                section {
+                padding-top: 15px
                 }
             </style>
 

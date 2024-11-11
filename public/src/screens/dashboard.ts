@@ -32,7 +32,6 @@ class Dashboard extends HTMLElement {
         /* Tus estilos aquí */
       </style>
       <div>
-        <center-section></center-section>
         <!-- Agrega otras secciones si es necesario -->
       </div>
     `;
