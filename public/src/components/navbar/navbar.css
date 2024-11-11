@@ -1,0 +1,33 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+img {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+}
+
+#logo {
+    width: 110px;
+    height: auto;
+}
+#user-list {
+    display: none; /* Inicialmente oculto */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 300px;
+    z-index: 1000;
+}
+
+#user-list.visible {
+    display: block; /* Se muestra cuando la clase 'visible' está añadida */
+}

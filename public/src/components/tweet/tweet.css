@@ -1,0 +1,22 @@
+section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+img {
+    max-width: 100%; /* Asegura que la imagen no se desborde */
+    border-radius: 10px; /* Opcional para redondear bordes */
+    width: 500px;
+    height: auto;
+}
+
