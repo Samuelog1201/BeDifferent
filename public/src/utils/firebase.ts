@@ -90,6 +90,7 @@ export const addTweet = async (tweet: TweetData) => {
             createdAt: new Date(),
         };
         await addDoc(where, tweetData);
+
         console.log('Tweet añadido con éxito');
     } catch (error) {
         console.error('Error al añadir el tweet', error);
