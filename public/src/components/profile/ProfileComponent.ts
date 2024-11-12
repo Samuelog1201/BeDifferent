@@ -33,7 +33,7 @@ class ProfileComponent extends HTMLElement {
                 break;
             case AttributeProfile.avatar:
                 // Si el valor es vacío o nulo, usar la imagen por defecto
-                this.avatar = newValue ? newValue : "default-avatar.png";
+                this.avatar = newValue ? newValue : "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
                 break;
             case AttributeProfile.email:
                 // Si el valor es vacío o nulo, usar la imagen por defecto

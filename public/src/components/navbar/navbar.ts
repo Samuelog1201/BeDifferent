@@ -11,7 +11,7 @@ class Navbar extends HTMLElement {
     settings?: string;
     userlogo?: string;
     usersListVisible: boolean = false;
-    originalUserLogo: string = ""; // Para almacenar la URL original del logo
+    originalUserLogo: string = "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff"; // Para almacenar la URL original del logo
 
     constructor() {
         super();
@@ -93,9 +93,9 @@ class Navbar extends HTMLElement {
     render() {
         if (this.shadowRoot) {
             // Valores predeterminados si los atributos no están definidos
-            const logoSrc = this.logo || "default-logo.png";
-            const settingsSrc = this.settings || "default-settings.png";
-            const userLogoSrc = this.userlogo || "default-userlogo.png";
+            const logoSrc = this.logo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=8592d2ae-13df-4a35-8911-83dbac66123b";
+            const settingsSrc = this.settings || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb";
+            const userLogoSrc = this.userlogo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
 
             // Solo usamos innerHTML una vez para evitar múltiples renderizados
             this.shadowRoot.innerHTML = `

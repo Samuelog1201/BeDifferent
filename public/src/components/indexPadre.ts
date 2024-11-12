@@ -37,8 +37,9 @@ export enum AttributeTweet {
 
 // Atributos relacionados con las noticias
 export enum AttributeNotice {
-    "title" = "title",
-    "content" = "content"
+    "imageNotice" = "imageNotice",
+    "textNotice" = "textNotice",
+    "titleNotice" = "titleNotice"
 }
 
 // Eliminar o renombrar si no es necesario

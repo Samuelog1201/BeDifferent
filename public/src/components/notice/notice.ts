@@ -1,8 +1,4 @@
-export enum Attribute4 {
-    "titleNotice" = "titlenotice",
-    "textNotice" = "texnnotice",
-    "imageNotice" = "imagenotice",
-}
+import { AttributeNotice } from "../indexPadre";
 
 class Notice extends HTMLElement {
     titleNotice?: string;
@@ -15,18 +11,18 @@ class Notice extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [Attribute4.titleNotice, Attribute4.textNotice, Attribute4.imageNotice];
+        return [AttributeNotice.titleNotice, AttributeNotice.textNotice, AttributeNotice.imageNotice];
     }
 
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
         switch (propName) {
-            case Attribute4.titleNotice:
+            case AttributeNotice.titleNotice:
                 this.titleNotice = newValue;
                 break;
-            case Attribute4.textNotice:
+            case AttributeNotice.textNotice:
                 this.textNotice = newValue;
                 break;
-            case Attribute4.imageNotice:
+            case AttributeNotice.imageNotice:
                 this.imageNotice = newValue;
                 break;
         }

@@ -101,8 +101,8 @@ export const addTweet = async (tweet: TweetData) => {
 export const getTweets = async () => {
     try {
         const { db } = await getFirebaseInstance();
-        const tweetCollection = collection(db, 'tweets');
-        const querySnapshot = await getDocs(tweetCollection);
+        const where = collection(db, 'tweets');
+        const querySnapshot = await getDocs(where);
         const data: TweetData[] = [];
 
         querySnapshot.forEach((doc) => {
@@ -120,8 +120,8 @@ export const getTweets = async () => {
 export const getTweetsByUser = async (userId: string) => {
     try {
         const { db } = await getFirebaseInstance();
-        const tweetCollection = collection(db, 'tweets');
-        const querySnapshot = await getDocs(tweetCollection);
+        const where = collection(db, 'tweets');
+        const querySnapshot = await getDocs(where);
         const data: TweetData[] = [];
 
         querySnapshot.forEach((doc) => {
