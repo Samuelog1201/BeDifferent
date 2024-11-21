@@ -6,6 +6,7 @@ import { loginUser } from '../utils/firebase';
 class Login extends HTMLElement {
     private email: string = '';
     private password: string = '';
+    changeRegister: any;
 
     constructor() {
         super();
@@ -46,6 +47,11 @@ class Login extends HTMLElement {
             // Si hay un error, mostrar un mensaje al usuario
             alert('Las credenciales son incorrectas. Intenta de nuevo.');
         }
+    }
+
+    // Método para redirigir al registro
+    redirectToRegister() {
+        dispatch(navigate(Screens.REGISTER)); // Aquí está el cambio
     }
 
     // Método para renderizar el formulario
@@ -101,6 +107,12 @@ class Login extends HTMLElement {
             submitButton.innerText = 'Iniciar sesión';
             submitButton.addEventListener('click', this.submitForm.bind(this));
             this.shadowRoot.appendChild(submitButton);
+
+            // Crear el botón de registro y agregar el evento para navegar
+            const registerButton = this.ownerDocument.createElement('button');
+            registerButton.innerText = 'Registrar';
+            registerButton.addEventListener('click', this.redirectToRegister.bind(this));  // Llamada a la función de redirección
+            this.shadowRoot.appendChild(registerButton);
         }
     }
 }

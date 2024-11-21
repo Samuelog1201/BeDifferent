@@ -140,7 +140,7 @@ class AppContainer extends HTMLElement {
 
             switch (appState.screen) {
                 case Screens.REGISTER:
-                    const registerSection = document.createElement('my-register') as HTMLElement;
+                    const registerSection = document.createElement('app-register') as HTMLElement;
                     registerSection.addEventListener('register', (event) => {
                         const customEvent = event as CustomEvent<RegisterEventDetail>;
                         const { email, password, name, age } = customEvent.detail;

@@ -62,6 +62,12 @@ class Register extends HTMLElement {
             console.error('Error en el registro:', error);
             alert('Hubo un error al registrar el usuario.');
         }
+
+    }
+
+
+    redirectToLogin() {
+        dispatch(navigate(Screens.LOGIN)); // Aquí está el cambio
     }
 
     // Método para renderizar el formulario
@@ -130,6 +136,11 @@ class Register extends HTMLElement {
                 this.submitForm();
             });
             this.shadowRoot.appendChild(submitButton);
+
+            const loginButton = this.ownerDocument.createElement('button');
+            loginButton.innerText = 'Login';
+            loginButton.addEventListener('click', this.redirectToLogin.bind(this));  // Llamada a la función de redirección
+            this.shadowRoot.appendChild(loginButton);
         }
     }
 }
