@@ -28,6 +28,7 @@ class CenterSection extends HTMLElement {
                         display: flex;
                         flex-direction: column;
                         gap: 15px;
+                        margin-top: 15px;
                     }
 
                     #public {
@@ -88,9 +89,6 @@ class CenterSection extends HTMLElement {
                         background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
                     }
 
-                    section {
-                        padding-top: 15px;
-                    }
                 </style>
 
                 <section>

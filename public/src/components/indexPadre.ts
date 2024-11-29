@@ -6,6 +6,8 @@ export { default as RightSection } from "./rightSection/rightSection";
 export { default as createTweet } from "./tweet/TweetComponent";
 export { default as CenterSection } from "./centerSection/centerSection";
 export { default as TweetComponent } from "./tweet/TweetComponent"
+export { dataNotices } from "../data/dataNotices"
+ 
 
 // Atributos relacionados con el logo
 export enum AttributeLogo {

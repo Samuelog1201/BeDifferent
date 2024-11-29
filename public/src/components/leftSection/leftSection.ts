@@ -1,6 +1,7 @@
-class LeftSection extends HTMLElement {
-    private areNoticesVisible: boolean = false; // Estado para saber si las noticias están visibles o no
+import { dataNotices } from "../indexPadre";
+import Notice, { AttributeNotice } from "../notice/notice"
 
+class LeftSection extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
@@ -14,6 +15,7 @@ class LeftSection extends HTMLElement {
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
+                    /* Estilos del componente */
                     .notice-list {
                         display: flex;
                         flex-direction: column;
@@ -33,8 +35,8 @@ class LeftSection extends HTMLElement {
                         width: 350px;
                         z-index: 1000;
                     }
-
-                    button {
+                    
+                     button {
                         padding: 10px 20px;
                         background-color: #D9D9D9;
                         color: white;
@@ -49,15 +51,29 @@ class LeftSection extends HTMLElement {
 
                     button:hover {
                         background-color: #4b4b4b;
-                    }
+                    
                 </style>
 
-                <section>
-                    <button id="toggle-notices">Noticias</button>
-                    <div class="notice-list"></div>
-                </section>
+                <section> 
+                <h1> Ultimas Noticias </h1>
+                <button id="toggle-notices">Noticias</button>
+                <div class="notice-list"></div>
+                </section> 
+                
+
             `;
 
+            // Selecciona el contenedor donde se insertarán los tweets
+            const noticeList = this.shadowRoot.querySelector('.notice-list');
+
+            // Renderiza las noticias recibidas del array dataNotice
+            dataNotices.forEach(notice => {
+                const noticeCard = document.createElement("my-notice") as Notice;
+                noticeCard.setAttribute(AttributeNotice.titleNotice, notice.titleNotice);
+                noticeCard.setAttribute(AttributeNotice.textNotice, notice.textNotice);
+                noticeCard.setAttribute(AttributeNotice.imageNotice, notice.imageNotice);
+                noticeList?.appendChild(noticeCard); // Añade la noticia a la lista
+            });
         }
     }
 }

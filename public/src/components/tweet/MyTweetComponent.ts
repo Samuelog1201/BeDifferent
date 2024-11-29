@@ -82,44 +82,88 @@ class MyTweetComponent extends HTMLElement {
             this.shadowRoot.innerHTML = `
                 <style>
                     section {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: column;
-                        background-color: white;
-                        border-radius: 10px;
-                        padding: 15px;
-                        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-                    }
-                    h1 {
-                        font-size: 1.5em;
-                        margin: 5px 0;
-                        font-family: "Rubik", sans-serif;
-                        font-weight: bold;
-                    }
-                    p {
-                        font-family: "Rubik", sans-serif;
-                        font-size: 1em;
-                        margin-block-start: 1em;
-                        margin-block-end: 1em;
-                        white-space: pre-wrap;
-                    }
-                    #image-upload {
-                        max-width: 100%;
-                        border-radius: 10px;
-                        width: 500px;
-                        height: auto;
-                    }
-                    #icono-perfil {
-                        width: 50px;
-                        height: auto;
-                        margin-right: 5px; 
-                    }
-                    .info-perfil {
-                        display: flex;
-                        align-items: center; 
-                        justify-content: flex-start; 
-                    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f9f9f9; /* Fondo claro para mantener consistencia */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave como en los inputs */
+    margin: 10px auto; /* Espaciado entre tweets */
+    max-width: 500px; /* Limita el ancho para consistencia */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 5px 0;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
+    color: #333; /* Color oscuro consistente con el título del primer conjunto */
+    text-align: left; /* Alineado a la izquierda para un diseño más natural */
+    width: 100%; /* Mantiene el ancho del contenedor */
+}
+
+p {
+    font-family: "Rubik", sans-serif;
+    font-size: 1em;
+    color: #555; /* Color gris para texto */
+    margin: 10px 0;
+    white-space: pre-wrap; /* Conserva el formato del texto */
+    text-align: justify; /* Mejora la lectura */
+    line-height: 1.5; /* Añade espacio entre líneas */
+}
+
+#image-upload {
+    max-width: 100%;
+    border-radius: 10px;
+    width: 100%; /* Ancho completo del contenedor */
+    height: auto;
+    margin-top: 10px; /* Espaciado con el contenido anterior */
+}
+
+#icono-perfil {
+    width: 50px;
+    height: 50px; /* Cuadrado para mejor proporción */
+    margin-right: 10px; /* Más separación entre avatar y texto */
+    border-radius: 50%; /* Hace el avatar circular */
+    border: 2px solid #ccc; /* Añade un borde suave */
+}
+
+.info-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%; /* Mantiene el ancho del contenedor */
+    margin-bottom: 10px; /* Espaciado entre la información del perfil y el contenido */
+}
+
+button {
+    padding: 10px 20px; /* Espaciado interno del botón */
+    background-color: #808080; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-family: "Rubik", sans-serif; /* Fuente */
+    font-size: 1em; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor de mano al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+    margin-top: 10px; /* Separación con el contenido anterior */
+    align-self: flex-end; /* Alinea el botón a la derecha dentro de la sección */
+}
+
+button:hover {
+    background-color: #4b4b4b; /* Color de fondo al pasar el mouse */
+}
+
+section:hover {
+    background-color: #f1f1f1; /* Fondo más claro al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Animación suave */
+}
+
+
                 </style>
                 <section>
                     <div>

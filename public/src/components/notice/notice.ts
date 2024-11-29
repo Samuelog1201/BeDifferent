@@ -1,9 +1,15 @@
-import { AttributeNotice } from "../indexPadre";
+export enum AttributeNotice {
+    "titleNotice" = "titlenotice",
+    "textNotice" = "texnnotice",
+    "imageNotice" = "imagenotice",
+}
 
 class Notice extends HTMLElement {
     titleNotice?: string;
     textNotice?: string;
     imageNotice?: string;
+
+    
 
     constructor() {
         super();
