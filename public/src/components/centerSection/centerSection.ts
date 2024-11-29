@@ -24,6 +24,16 @@ class CenterSection extends HTMLElement {
             shadowRoot.innerHTML = `
                 <style>
                     /* Estilos del componente central */
+
+                    section {
+                     background-image: url("https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/center.png?alt=media&token=fb8226ec-1697-4c80-8157-f190b6e7e507");
+                    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+                    background-position: center; /* Centra la imagen en el contenedor */
+                    background-repeat: no-repeat; /* Evita que la imagen se repita */
+                    z-index: 1000;
+                    padding: 10px;
+                    }
+
                     .tweet-list {
                         display: flex;
                         flex-direction: column;

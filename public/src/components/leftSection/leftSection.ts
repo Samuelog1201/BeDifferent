@@ -33,7 +33,10 @@ class LeftSection extends HTMLElement {
                     section {
                         padding: 10px;
                         width: 350px;
+                        height: 3000px;
                         z-index: 1000;
+                        background-color: #F0F0F0;
+
                     }
                     
                      button {

@@ -46,9 +46,10 @@ class RightSection extends HTMLElement {
                 section {
                     
                     width: 350px;
-                    height: 1500px;
+                    height: 2400px;
                     z-index: 1000;
                     padding: 10px;
+                    background-color: #F0F0F0;
 
                     background-image: url("https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/right.png?alt=media&token=bc16b8e7-4686-4cb5-b869-03be67712adc");
                     background-size: cover; /* Hace que la imagen cubra todo el contenedor */
