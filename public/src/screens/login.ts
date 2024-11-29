@@ -6,7 +6,6 @@ import { loginUser } from '../utils/firebase';
 class Login extends HTMLElement {
     private email: string = '';
     private password: string = '';
-    changeRegister: any;
 
     constructor() {
         super();
@@ -17,7 +16,7 @@ class Login extends HTMLElement {
         this.render();
     }
 
-    // Métodos para manejar los cambios en los inputs
+    // Manejar cambios en los inputs
     changeEmail(e: Event) {
         const input = e.target as HTMLInputElement;
         this.email = input.value;
@@ -28,91 +27,133 @@ class Login extends HTMLElement {
         this.password = input.value;
     }
 
-    // Método para enviar el formulario
+    // Enviar el formulario
     async submitForm(e: Event) {
-        e.preventDefault();  // Evitar el comportamiento por defecto del formulario
+        e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
         const { email, password } = this;
 
-        // Validación de los campos
         if (!email || !password) {
             alert('Por favor, completa todos los campos.');
             return;
         }
 
         try {
-            // Intentar el inicio de sesión con las credenciales proporcionadas
             await loginUser(email, password);
         } catch (error) {
-            // Si hay un error, mostrar un mensaje al usuario
             alert('Las credenciales son incorrectas. Intenta de nuevo.');
         }
     }
 
-    // Método para redirigir al registro
+    // Redirigir al registro
     redirectToRegister() {
-        dispatch(navigate(Screens.REGISTER)); // Aquí está el cambio
+        dispatch(navigate(Screens.REGISTER));
     }
 
-    // Método para renderizar el formulario
+    // Renderizar el formulario
     render() {
         if (this.shadowRoot) {
-            const style = document.createElement('style');
-            style.textContent = `
-                input {
-                    margin: 10px;
-                    padding: 8px;
-                    width: 200px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                }
-                button {
-                    padding: 10px 20px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-                button:hover {
-                    background-color: #45a049;
-                }
-                h1 {
-                    font-size: 24px;
-                    color: #333;
-                }
+            this.shadowRoot.innerHTML = `
+                <style>
+                    /* Estilo para centrar el menú en toda la pantalla */
+                    :host {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        width: 100%;
+                        background-color: rgba(0, 0, 0, 0.7);
+                        font-family: "Rubik", sans-serif;
+                    }
+
+                    /* Menú de login */
+                    .login-menu {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 90%;
+                        max-width: 400px;
+                        padding: 20px;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    }
+
+                    h1 {
+                        font-size: 1.8em;
+                        color: #333;
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+
+                    input[type="email"],
+                    input[type="password"] {
+                        width: 100%;
+                        padding: 10px;
+                        margin-bottom: 15px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 1em;
+                        font-family: "Rubik", sans-serif;
+                    }
+
+                    input:focus {
+                        border-color: #9c9c9c;
+                        outline: none;
+                    }
+
+                    button {
+                        width: 100%;
+                        padding: 10px 20px;
+                        margin-top: 10px;
+                        background-color: #808080;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 1em;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+
+                    button:hover {
+                        background-color: #4b4b4b;
+                    }
+
+                    .register-button {
+                        background-color: #4CAF50;
+                    }
+
+                    .register-button:hover {
+                        background-color: #45a049;
+                    }
+                    
+                     .logoBD {
+                        width: 100px; 
+                        height: auto;
+                        margin-bottom: 10px; 
+                    }
+                        
+                </style>
+                <div class="login-menu">
+                 <img src="https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=440be58b-52d3-4aec-80ef-253f1d28ccd3" alt="Logo" class="logoBD" />
+                    <h1>Iniciar sesión</h1>
+                    <input type="email" placeholder="Correo electrónico" />
+                    <input type="password" placeholder="Contraseña" />
+                    <button id="login-button">Iniciar sesión</button>
+                    <button class="register-button" id="register-button">Registrar</button>
+                </div>
             `;
-            this.shadowRoot.appendChild(style);
 
-            const title = this.ownerDocument.createElement('h1');
-            title.innerText = 'Iniciar sesión';
-            this.shadowRoot.appendChild(title);
+            const emailInput = this.shadowRoot.querySelector('input[type="email"]')!;
+            const passwordInput = this.shadowRoot.querySelector('input[type="password"]')!;
+            const loginButton = this.shadowRoot.querySelector('#login-button')!;
+            const registerButton = this.shadowRoot.querySelector('#register-button')!;
 
-            // Crear el input para el correo electrónico
-            const pEmail = this.ownerDocument.createElement('input');
-            pEmail.placeholder = 'Correo electrónico';
-            pEmail.type = 'email';  // Asegurarse de que sea un campo de correo
-            pEmail.addEventListener('input', this.changeEmail.bind(this));
-            this.shadowRoot.appendChild(pEmail);
-
-            // Crear el input para la contraseña
-            const pPassword = this.ownerDocument.createElement('input');
-            pPassword.type = 'password';  // Asegurarse de que sea un campo de contraseña
-            pPassword.placeholder = 'Contraseña';
-            pPassword.addEventListener('input', this.changePassword.bind(this));
-            this.shadowRoot.appendChild(pPassword);
-
-            // Crear el botón de inicio de sesión
-            const submitButton = this.ownerDocument.createElement('button');
-            submitButton.innerText = 'Iniciar sesión';
-            submitButton.addEventListener('click', this.submitForm.bind(this));
-            this.shadowRoot.appendChild(submitButton);
-
-            // Crear el botón de registro y agregar el evento para navegar
-            const registerButton = this.ownerDocument.createElement('button');
-            registerButton.innerText = 'Registrar';
-            registerButton.addEventListener('click', this.redirectToRegister.bind(this));  // Llamada a la función de redirección
-            this.shadowRoot.appendChild(registerButton);
+            emailInput.addEventListener('input', this.changeEmail.bind(this));
+            passwordInput.addEventListener('input', this.changePassword.bind(this));
+            loginButton.addEventListener('click', this.submitForm.bind(this));
+            registerButton.addEventListener('click', this.redirectToRegister.bind(this));
         }
     }
 }

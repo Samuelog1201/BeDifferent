@@ -15,8 +15,9 @@ class ProfileComponent extends HTMLElement {
     static get observedAttributes() {
         const attrs: Record<AttributeProfile, null> = {
             avatar: null,
-            profileName: null,
+            name: null,
             email: null,
+            edad: null,
             uid: null,
         };
         return Object.keys(attrs); 
@@ -25,7 +26,7 @@ class ProfileComponent extends HTMLElement {
     // Método que se llama cuando un atributo observado cambia
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
         switch (propName) {
-            case AttributeProfile.profileName:
+            case AttributeProfile.name:
                 this.name = newValue ?? "Nombre no disponible";
                 break;
             case AttributeProfile.uid:

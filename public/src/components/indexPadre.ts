@@ -5,6 +5,7 @@ export { default as LeftSection } from "./leftSection/leftSection";
 export { default as RightSection } from "./rightSection/rightSection";
 export { default as createTweet } from "./tweet/TweetComponent";
 export { default as CenterSection } from "./centerSection/centerSection";
+export { default as TweetComponent } from "./tweet/TweetComponent"
 
 // Importación de utilidades y estado
 import { addObserver, appState } from '../store';  // Si no se usan, eliminar
@@ -21,19 +22,21 @@ export enum AttributeLogo {
 
 // Atributos relacionados con el perfil de usuario
 export enum AttributeProfile  {
-    uid = "uid",
-    profileName = "profileName",  // Cambié 'name' por 'profileName' para evitar conflicto con HTMLElement
+    name = "name",  // Cambié 'name' por 'profileName' para evitar conflicto con HTMLElement
+    edad = "edad",
     email = "email",
-    avatar = "avatar",
+	avatar = "avatar",
+	uid = "uid"
 }
 
 // Atributos relacionados con el tweet
-export enum AttributeTweet {
+/* export enum AttributeTweet {
     username = "username",
+    userUid = "userUid",
     avatar = "avatarUrl",
     content = "content",
     imageUrl = "imageUrl"
-}
+} */
 
 // Atributos relacionados con las noticias
 export enum AttributeNotice {

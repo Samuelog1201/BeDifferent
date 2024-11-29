@@ -6,6 +6,7 @@ import './screens/profile';
 import { addObserver, appState } from './store/';
 import { Screens } from './types/store';
 import { registerUser, loginUser } from './utils/firebase';
+import Profile from './screens/profile';
 
 // Definir el tipo de los detalles del evento personalizado
 interface LoginEventDetail {
@@ -112,7 +113,7 @@ class AppContainer extends HTMLElement {
             this.rightSection = document.createElement("right-section") as RightSection;
 
             const profileCard = this.ownerDocument.createElement("my-profile") as ProfileComponent;
-            profileCard.setAttribute(AttributeProfile.profileName, String(user.name));
+            profileCard.setAttribute(AttributeProfile.name, String(user.name));
             profileCard.setAttribute(AttributeProfile.uid, String(user.uid));
             profileCard.setAttribute(AttributeProfile.avatar, String(user.avatar)); 
             profileCard.setAttribute(AttributeProfile.email, String(user.email)); 
@@ -131,6 +132,37 @@ class AppContainer extends HTMLElement {
 
             this.shadowRoot.appendChild(navbarContainer);
             this.shadowRoot.appendChild(container);
+        }
+    }
+    
+    renderProfile() {
+        const { user } = appState;
+        if (this.shadowRoot && appState && user) {
+            this.shadowRoot.innerHTML = '';
+
+            const style = document.createElement("style");
+            style.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+                .container {
+                    display: flex;  
+                    background-image:   opacity: 100%,
+                    url("https://s0.smartresize.com/wallpaper/928/844/HD-wallpaper-motivation-fitness-workout-dark-ultra-sports-fitness-dark-motivation-workout.jpg");
+                }
+            `;
+
+            const navbar = document.createElement("my-navbar") as NavBar;
+            navbar.setAttribute(AttributeProfile.avatar, "https://...");
+
+            const navbarContainer = document.createElement("nav");
+            navbarContainer.setAttribute("class", "navbarContainer");
+            navbarContainer.appendChild(navbar);
+
+            const profile = document.createElement("app-profile") as Profile;
+
+            this.shadowRoot.appendChild(navbarContainer);
+            this.shadowRoot.appendChild(profile);
         }
     }
 
@@ -162,6 +194,15 @@ class AppContainer extends HTMLElement {
                 case Screens.DASHBOARD:
                     if (appState.user) {
                         this.renderApp();
+                    } else {
+                        console.log('Usuario no autenticado');
+                        // Aquí podrías redirigir o mostrar un mensaje de error.
+                    }
+                    break;
+
+                case Screens.PROFILE:
+                    if (appState.user) {
+                        this.renderProfile();
                     } else {
                         console.log('Usuario no autenticado');
                         // Aquí podrías redirigir o mostrar un mensaje de error.

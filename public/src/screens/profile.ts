@@ -1,59 +1,94 @@
-/*/ 
 import { addObserver, appState, dispatch } from '../store';
-import { getTweetsByUser, getTweets } from '../utils/firebase';
-import { Tweet } from '../components/indexPadre';
-import { getStorage } from 'firebase/storage';
+import { getTweetsByUser, getTweets, getProfileData, getTweetsByUserListener } from '../utils/firebase';
+import { TweetComponent } from '../components/indexPadre';
+import { AttributeTweet } from '../components/tweet/TweetComponent';
+import { AttributeMyTweet } from '../components/tweet/MyTweetComponent';
+
+export enum AttributeProfile  {
+    name = "name",
+    age = "age",
+    email = "email",
+	uid = "uid",
+	avatar = "avatar"
+}
 
 class Profile extends HTMLElement {
+    name?: string;
+    age?: string;
+    email?: string;
+    uid?: string = '';
+    private tweetListParent:Element | null = null;
+
 	constructor() {
 		super();
 		this.attachShadow({ mode: 'open' });
 		addObserver(this);
 	}
 
-	async connectedCallback() {
-		if (appState.tweetsByUser.length === 0) {
-			const action = await getTweetsByUser();
-			dispatch(action);
-		} else {
-			this.render();
-		}
+	connectedCallback() {
+		this.uid = appState.user?.uid || '';
+		this.loadProfileData();
 	}
+
+    async loadProfileData() {
+        try {
+            const data = await getProfileData();  // Obtenemos los tweets de Firebase
+			this.name = data?.name;
+			this.age = data?.age;
+			this.email = data?.email;
+            this.render();
+        } catch (error) {
+            console.error("Error al cargar los info del usuario desde Firebase:", error);
+        }
+    }
 
 	async render() {
 		if (this.shadowRoot) {
-			const title = this.ownerDocument.createElement('h1');
-			title.innerText = 'Pérfil';
-			this.shadowRoot.appendChild(title);
+            this.shadowRoot.innerHTML = `
+                <style>
+				.user_name {
+					color: red;
+				}
+				.my-tweets {
+					display: flex;
+					flex-direction: column;
+					gap: 15px;
+				}
+				</style>
+				<div>
+					<h1>Perfil</h1>
+					<h2>${this.name ||'Nombre de Usuario'}</h2>
+					<h3>${this.email ||'email'}</h3>
+					<h3>${this.age ||'edad'}</h3>
 
-			//Para subir la imagen
-			const pImage = this.ownerDocument.createElement('input');
-			pImage.type = 'file';
-			pImage.addEventListener('change', () => {
-				const file = pImage.files?.[0];
-				if (file) uploadFileCloudinary(file, appState.user);
-			});
-			this.shadowRoot.appendChild(pImage);
+					<div class="my-tweets"></div>
+				</div>
+            `;
 
-			//Para traer y renderizar la imagen
-			const urlImg = await getFileCloudinary(appState.user);
-			const profileImg = this.ownerDocument.createElement('img');
-			if (urlImg) profileImg.src = urlImg;
-			this.shadowRoot.appendChild(profileImg);
+            this.tweetListParent = this.shadowRoot.querySelector('.my-tweets');
 
-			appState.tweetsByUser.forEach((product: any) => {
-				const name = this.ownerDocument.createElement('h2');
-				name.innerText = Tweet.name;
-				this.shadowRoot?.appendChild(name);
-
-				const price = this.ownerDocument.createElement('h2');
-				price.innerText = product.price;
-				this.shadowRoot?.appendChild(price);
-			});
+			if (this.uid) {
+				getTweetsByUserListener((tweetCollection: Array<any>) => {
+					if (this.tweetListParent) {
+						this.tweetListParent.innerHTML = '';  // Limpiar antes de renderizar
+						// Solo renderizamos los tweets cuando se necesite
+						tweetCollection.slice().reverse().forEach((tweet: any) => {
+							//console.log(tweet);
+							const tweetCard = document.createElement("my-tweet-component");
+							tweetCard.setAttribute(AttributeMyTweet.userUid, tweet.userUid);
+							tweetCard.setAttribute(AttributeMyTweet.content, tweet.content);
+							tweetCard.setAttribute(AttributeMyTweet.imageUrl, tweet.imageUrl);
+							tweetCard.setAttribute(AttributeMyTweet.username, tweet.username);
+							tweetCard.setAttribute(AttributeMyTweet.uid, tweet.uid);
+							// tweetCard.setAttribute(AttributeTweet.avatar, tweet.avatarUrl); // Si decides usar avatarUrl
+							this.tweetListParent?.appendChild(tweetCard);
+						});
+					}
+				}, this.uid);
+			}
 		}
 	}
 }
-
+	
 customElements.define('app-profile', Profile);
 export default Profile; 
-*/

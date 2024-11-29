@@ -1,5 +1,5 @@
 import { Actions, ProfileData, Screens } from '../types/store';
-import { addTweet, deleteTweet } from '../utils/firebase';
+import { addTweet, deleteTweetById, logOut } from '../utils/firebase';
 import { TweetData } from '../types/tweets';
 import { getTweets, getTweetsByUser } from '../utils/firebase';
 
@@ -48,7 +48,7 @@ export const addTweetAction = (tweet: TweetData) => {
 export const deleteTweetAction = (tweetId: string) => {
     return async (dispatch: Function) => {
         try {
-            await deleteTweet(tweetId);  // Llamamos a la función para eliminar el tweet
+            await deleteTweetById(tweetId);  // Llamamos a la función para eliminar el tweet
             dispatch({
                 action: Actions.DELETE_TWEET,
                 payload: tweetId,  // Retornamos el tweetId como payload
@@ -67,6 +67,16 @@ export const setUserCredentials = (user: string) => {
     };
 };
 
+// Acción para establecer las credenciales del usuario
+export const logOutUser = () => {
+    logOut();
+
+    return {
+        action: Actions.LOGOUT,
+        payload: null,
+    };
+};
+
 export const setUser = (user: ProfileData) => {
     return {
         action: Actions.SET_USER,
@@ -75,9 +85,9 @@ export const setUser = (user: ProfileData) => {
 };
 
 // Acción para agregar una respuesta, con text e imageUrl (con imagen opcional)
-export const addResponse = (text: string, imageUrl: string = '') => {
+export const addResponse = (content: string, imageUrl: string = '') => {
     return {
         action: Actions.ADD_TWEET,
-        payload: { text, imageUrl } as TweetData, // Usar el tipo Tweet para mayor seguridad
+        payload: { content, imageUrl } as TweetData, // Usar el tipo Tweet para mayor seguridad
     };
 };

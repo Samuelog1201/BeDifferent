@@ -1,5 +1,9 @@
  // Importando los atributos desde indexPadre
 
+import { dispatch } from "../../store";
+import { logOutUser, navigate } from "../../store/actions";
+import { Screens } from "../../types/store";
+
 export enum Attribute2 {
     "logo" = "logo",
     "settings" = "settings",
@@ -48,7 +52,19 @@ class Navbar extends HTMLElement {
         const userlogo = this.shadowRoot?.querySelector("#userlogo");
         if (userlogo) {
             userlogo.addEventListener("click", () => {
-                this.toggleUserList();
+                dispatch(navigate(Screens.PROFILE));
+            });
+        }
+        const logoutLogo = this.shadowRoot?.querySelector("#logout");
+        if (logoutLogo) {
+            logoutLogo.addEventListener("click", () => {
+                dispatch(logOutUser());
+            });
+        }
+        const homeLogo = this.shadowRoot?.querySelector("#home");
+        if (homeLogo) {
+            homeLogo.addEventListener("click", () => {
+                dispatch(navigate(Screens.DASHBOARD));
             });
         }
     }
@@ -93,8 +109,9 @@ class Navbar extends HTMLElement {
     render() {
         if (this.shadowRoot) {
             // Valores predeterminados si los atributos no están definidos
-            const logoSrc = this.logo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=8592d2ae-13df-4a35-8911-83dbac66123b";
-            const settingsSrc = this.settings || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb";
+            const logoSrc = this.logo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=440be58b-52d3-4aec-80ef-253f1d28ccd3";
+            const homeSrc = this.settings || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb";
+            const logoutSrc = this.userlogo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
             const userLogoSrc = this.userlogo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
 
             // Solo usamos innerHTML una vez para evitar múltiples renderizados
@@ -110,13 +127,13 @@ class Navbar extends HTMLElement {
                     }
 
                     img {
-                        width: 80px;
+                        width: 30px;
                         height: auto;
                         cursor: pointer;
                     }
 
                     #logo {
-                        width: 110px;
+                        width: 60px;
                         height: auto;
                     }
 
@@ -138,10 +155,10 @@ class Navbar extends HTMLElement {
                 </style>
                 <nav>
                     <div>
-                        <img id="settings" src="${settingsSrc}" alt="Settings">
+                        <img id="logout" src="${logoutSrc}" alt="User Logo">
                     </div>
                     <div>
-                        <img id="logo" src="${logoSrc}" alt="Logo">
+                        <img id="home" src="${logoSrc}" alt="Home">
                     </div>
                     <div>
                         <img id="userlogo" src="${userLogoSrc}" alt="User Logo">

@@ -32,7 +32,6 @@ class Dashboard extends HTMLElement {
         /* Tus estilos aquí */
       </style>
       <div>
-        <!-- Agrega otras secciones si es necesario -->
       </div>
     `;
 
@@ -48,15 +47,17 @@ class Dashboard extends HTMLElement {
 
   handleAddTweet(tweetContent: { text: string; imageUrl: string; }) {   
     const tweet: TweetData = {
-      id: 'some-unique-id',  // Puedes generar un ID único, por ejemplo usando un timestamp o algún otro método
-      text: tweetContent.text,
+      uid: 'some-unique-id',  // Puedes generar un ID único, por ejemplo usando un timestamp o algún otro método
+      content: tweetContent.text,
       imageUrl: tweetContent.imageUrl,
       userUid: appState.user?.uid || '',  // Asegúrate de usar el UID correcto
       createdAt: new Date(),  // Usamos la fecha actual
       avatarUrl: null,
       username: appState.user?.name || '',
     };
-  
+    
+   
+
     // Despachar la acción para agregar el tweet al estado
     dispatch(addTweetAction(tweet));
   

@@ -37,7 +37,14 @@ export const reducer = (currentAction: Action, currentState: AppState): AppState
             // Acción para eliminar un tweet
             return {
                 ...currentState,
-                tweets: currentState.tweets.filter(tweet => tweet.id !== payload), // Elimina el tweet por ID
+                tweets: currentState.tweets.filter(tweet => tweet.uid !== payload), // Elimina el tweet por ID
+            };
+
+        case Actions.LOGOUT:
+            // Acción para cerrar sesion
+            return {
+                ...currentState,
+                user: payload,
             };
 
         default:

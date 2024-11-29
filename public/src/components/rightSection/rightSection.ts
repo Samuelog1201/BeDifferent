@@ -126,8 +126,8 @@ class RightSection extends HTMLElement {
                     }
 
                     #icon-friends {
-                        width: 50px; 
-                        height: 50px; 
+                        width: 30px; 
+                        height: 30px; 
                         padding: 10px;
                     }
 

@@ -12,6 +12,7 @@ export enum Actions {
     GET_TWEETS = 'GET_TWEETS',
     GET_TWEETSBYUSER = 'GET_TWEETSBYUSER',
     SET_USER = 'SET_USER',
+    LOGOUT = 'LOGOUT',
 }
 
 export enum Screens {

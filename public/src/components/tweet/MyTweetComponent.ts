@@ -1,4 +1,6 @@
-export enum AttributeTweet {
+import { deleteTweetById } from "../../utils/firebase";
+
+export enum AttributeMyTweet {
     username = "username",
     userUid = "userUid",
     avatar = "avatarUrl",
@@ -7,7 +9,7 @@ export enum AttributeTweet {
     uid = "uid",
 }
 
-class TweetComponent extends HTMLElement {
+class MyTweetComponent extends HTMLElement {
     uid?: string | null;
     username?: string;
     content?: string;
@@ -26,39 +28,48 @@ class TweetComponent extends HTMLElement {
         this.render();
     }
 
+    private async handleDeleteTweet(tweetId: string) {
+        try {
+			if (tweetId) {
+				await deleteTweetById(tweetId);
+			}
+        } catch (error) {
+            console.error("Error al borrar el tweet del usuario:", error);
+        }
+    }
+
     static get observedAttributes() {
         return [
-            AttributeTweet.username,
-            AttributeTweet.userUid,
-            AttributeTweet.content,
-            AttributeTweet.imageUrl,
-            AttributeTweet.avatar,
-            AttributeTweet.uid
+            AttributeMyTweet.username,
+            AttributeMyTweet.userUid,
+            AttributeMyTweet.content,
+            AttributeMyTweet.imageUrl,
+            AttributeMyTweet.avatar,
+            AttributeMyTweet.uid
         ];
     }
 
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
         switch (propName) {
-            case AttributeTweet.username:
+            case AttributeMyTweet.username:
                 this.username = newValue;
                 break;
-            case AttributeTweet.userUid:
+            case AttributeMyTweet.userUid:
                 this.userUid = newValue;
                 break;
-            case AttributeTweet.content:
+            case AttributeMyTweet.content:
                 this.content = newValue;
                 break;
-            case AttributeTweet.imageUrl:
+            case AttributeMyTweet.imageUrl:
                 this.imageUrl = newValue;
                 break;
-            case AttributeTweet.avatar:
+            case AttributeMyTweet.avatar:
                 this.avatar = newValue;
                 break;
-            case AttributeTweet.uid:
+            case AttributeMyTweet.uid:
                 this.uid = newValue;
                 break;
         }
-        //console.log(propName, newValue);
         this.render();
     }
 
@@ -115,11 +126,17 @@ class TweetComponent extends HTMLElement {
                         <p>${this.content || 'Contenido no disponible'}</p>
                         <img id="image-upload" src="${this.imageUrl}" alt="image upload">
                     </div>
+                    <button class="delete-tweet">BORRAR</button>
                 </section>
             `;
+
+            const deleteButton = this.shadowRoot.querySelector('.delete-tweet');
+            if (this.uid) {
+                deleteButton?.addEventListener('click', () => { this.handleDeleteTweet(String(this.uid))});
+            }
         }
     }
 }
 
-customElements.define("tweet-component", TweetComponent);  // Define el nuevo nombre de la clase
-export default TweetComponent;
+customElements.define("my-tweet-component", MyTweetComponent);  // Define el nuevo nombre de la clase
+export default MyTweetComponent;

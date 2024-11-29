@@ -1,6 +1,4 @@
 import { appState } from '../store';
-import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { TweetData } from '../types/tweets'
 
 let db: any;
@@ -84,7 +82,7 @@ export const addTweet = async (tweet: TweetData) => {
 
         const where = collection(db, 'tweets');
         const tweetData = {
-            content: tweet.text,
+            content: tweet.content,
             imageUrl: tweet.imageUrl || '',  // Si no se proporciona imageUrl, usar una cadena vacía
             userUid: appState.user?.uid || '',
             createdAt: new Date(),
@@ -101,12 +99,14 @@ export const addTweet = async (tweet: TweetData) => {
 export const getTweets = async () => {
     try {
         const { db } = await getFirebaseInstance();
+        const { collection, getDocs } = await import('firebase/firestore');
         const where = collection(db, 'tweets');
         const querySnapshot = await getDocs(where);
         const data: TweetData[] = [];
 
         querySnapshot.forEach((doc) => {
-            data.push(doc.data() as TweetData);  // Aseguramos que los datos tienen la forma de un Tweet
+            const newTweet = {uid: doc.id, ...doc.data()};
+            data.push(newTweet as TweetData);  // Aseguramos que los datos tienen la forma de un Tweet
         });
 
         return data;
@@ -116,10 +116,58 @@ export const getTweets = async () => {
     }
 };
 
+// Función para obtener tweets
+export const getTweetsListener = async (renderTweets: (data: any[]) => void) => {
+    try {
+        const { db } = await getFirebaseInstance();
+        const { collection, onSnapshot } = await import('firebase/firestore');
+        const where = collection(db, 'tweets');
+
+        const unsub = onSnapshot(where, (querySnapshot) => {
+            const tweets: TweetData[] = [];
+            querySnapshot.forEach((tweet) => {
+                const newTweet = {uid: tweet.id, ...tweet.data()};
+                console.log(newTweet);
+                tweets.push(newTweet as TweetData);  // Aseguramos que los datos tienen la forma de un Tweet
+            });
+            renderTweets(tweets);
+        });
+
+    } catch (error) {
+        console.error('Error al obtener los tweets', error);
+    }
+};
+
+
+export const getProfileData = async () => {
+	try {
+		const { db } = await getFirebaseInstance();
+		const { doc, getDoc } = await import('firebase/firestore');
+
+        if (appState.user) {
+            const docRef = doc(db, 'users', appState.user.uid || '');
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                console.log("Info perfil:", docSnap.data());
+    
+                return docSnap.data();
+            } else {
+                // docSnap.data() will be undefined in this case
+                console.log("No hay info del usuario!");
+                return {}
+            }
+        }
+	} catch (error) {
+		console.error('Error al obtener los tweets', error);
+	}
+};
+
 // Función para obtener tweets de un usuario específico
 export const getTweetsByUser = async (userId: string) => {
     try {
         const { db } = await getFirebaseInstance();
+        const { collection, getDocs } = await import('firebase/firestore');
         const where = collection(db, 'tweets');
         const querySnapshot = await getDocs(where);
         const data: TweetData[] = [];
@@ -127,7 +175,8 @@ export const getTweetsByUser = async (userId: string) => {
         querySnapshot.forEach((doc) => {
             const tweet = doc.data() as TweetData;
             if (tweet.userUid === userId) {
-                data.push(tweet);
+                const newTweet = {uid: doc.id, ...doc.data()};
+                data.push(newTweet as TweetData);
             }
         });
 
@@ -138,15 +187,50 @@ export const getTweetsByUser = async (userId: string) => {
     }
 };
 
-// Función para eliminar un tweet
-export const deleteTweet = async (tweetId: string) => {
+// Función para obtener tweets
+export const getTweetsByUserListener = async (renderTweets: (data: any[]) => void, userId: string) => {
     try {
         const { db } = await getFirebaseInstance();
+        const { collection, onSnapshot } = await import('firebase/firestore');
+        const where = collection(db, 'tweets');
+
+        const unsub = onSnapshot(where, (querySnapshot) => {
+            const tweets: TweetData[] = [];
+            querySnapshot.forEach((tweet) => {
+                const newTweet = {uid: tweet.id, ...tweet.data()} as TweetData;
+                if (newTweet.userUid === userId) {
+                    tweets.push(newTweet as TweetData);  // Aseguramos que los datos tienen la forma de un Tweet
+                }
+            });
+            renderTweets(tweets);
+        });
+
+    } catch (error) {
+        console.error('Error al obtener los tweets', error);
+    }
+};
+
+// Función para eliminar un tweet
+export const deleteTweetById = async (tweetId: string) => {
+    try {
+        const { db } = await getFirebaseInstance();
+        const { doc, deleteDoc } = await import('firebase/firestore');
         const tweetRef = doc(db, 'tweets', tweetId);  // Referencia al tweet en Firestore
         await deleteDoc(tweetRef);  // Eliminar el tweet
-        console.log('Tweet eliminado con éxito');
+        console.log('Tweet eliminado con éxito', tweetId);
     } catch (error) {
         console.error('Error al eliminar el tweet', error);
     }
+};
+
+// Función para eliminar un tweet
+export const logOut = async () => {
+    const { auth } = await getFirebaseInstance();
+    const { signOut } = await import('firebase/auth');
+    signOut(auth).then(() => {
+        console.log('Has cerrado sesion');
+      }).catch((error) => {
+        console.error('Error al eliminar el tweet', error);
+    });
 };
 

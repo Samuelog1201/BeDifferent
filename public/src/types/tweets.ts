@@ -1,7 +1,7 @@
 // Define la estructura del tweet
 export interface TweetData {
-    id: string|null,
-    text: string;
+    uid: string|null,
+    content: string;
     userUid: string
     imageUrl: string;
     avatarUrl: string|null,
