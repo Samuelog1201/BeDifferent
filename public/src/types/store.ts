@@ -1,9 +1,10 @@
-import { getTweets, getTweetsByUser } from '../utils/firebase'; // Asegúrate de que las funciones estén importadas
+import { getTweets, getTweetsByUser } from '../utils/firebase'; 
 import { TweetData } from './tweets';
 
 // Define la estructura de un observador que reaccionará a los cambios en el estado
 export type Observer = { render: () => void } & HTMLElement; // El método que se invoca para que el observador actualice la UI
 
+//Actions
 export enum Actions {
     NAVIGATE = 'NAVIGATE',
     SETUSERCREDENTIALS = 'SETUSERCREDENTIALS',
@@ -15,6 +16,7 @@ export enum Actions {
     LOGOUT = 'LOGOUT',
 }
 
+// Screens
 export enum Screens {
     LOGIN = 'LOGIN',
     DASHBOARD = 'DASHBOARD',
@@ -36,6 +38,7 @@ export interface Action {
     payload: any;  // El payload puede ser cualquier cosa dependiendo de la acción
 }
 
+// Propiedades del Perfil
 export interface ProfileData {
     name: string|null;
     uid: string|null;

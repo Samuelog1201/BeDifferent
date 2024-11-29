@@ -8,12 +8,12 @@ import { Screens } from './types/store';
 import { registerUser, loginUser } from './utils/firebase';
 import Profile from './screens/profile';
 
-// Definir el tipo de los detalles del evento personalizado
+// Definir el tipo de los detalles del evento Login
 interface LoginEventDetail {
     email: string;
     password: string;
 }
-
+// Definir el tipo de los detalles del evento Register
 interface RegisterEventDetail {
     email: string;
     password: string;
@@ -36,11 +36,12 @@ class AppContainer extends HTMLElement {
         this.render();
     }
 
+    // Registro
+    
     async handleRegister(email: string, password: string, name: string, age: number): Promise<void> {
         try {
             const success = await registerUser({ email, password, name, age });
             if (success) {
-                // En lugar de usar Math.random(), obtener un UID real de Firebase o el sistema de autenticación.
                 const profile = { uid: "random-uid", name, avatar: 'default-avatar.png' }; 
             } else {
                 console.error('Error en el registro');
@@ -50,20 +51,16 @@ class AppContainer extends HTMLElement {
             console.error('Error en el registro:', error);
         }
     }
-
+    // Login
     async handleLoginAttempt(email: string, password: string): Promise<void> {
         try {
             await loginUser(email, password);
-            // En lugar de usar un nombre de email como nombre, deberías obtener el nombre real del usuario desde la base de datos
-            /* const profile = { uid: "random-uid", name: email, avatar: 'default-avatar.png' };
-            this.handleLogin(profile); */
         } catch (error) {
             console.error('Error en el inicio de sesión', error);
-            // Aquí también podrías mostrar un mensaje de error en la UI
         }
     }
 
-    // This is called on render Dashbord
+    // Render App
     renderApp() {
         const { user } = appState;
         if (this.shadowRoot && appState && user) {

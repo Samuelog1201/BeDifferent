@@ -1,5 +1,6 @@
 import { deleteTweetById } from "../../utils/firebase";
 
+// Atributos MyTweet
 export enum AttributeMyTweet {
     username = "username",
     userUid = "userUid",
@@ -28,6 +29,7 @@ class MyTweetComponent extends HTMLElement {
         this.render();
     }
 
+    // Delete Tweet
     private async handleDeleteTweet(tweetId: string) {
         try {
 			if (tweetId) {
@@ -38,6 +40,7 @@ class MyTweetComponent extends HTMLElement {
         }
     }
 
+    // Atributos
     static get observedAttributes() {
         return [
             AttributeMyTweet.username,
@@ -49,6 +52,7 @@ class MyTweetComponent extends HTMLElement {
         ];
     }
 
+    // attributeChangedCallback
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
         switch (propName) {
             case AttributeMyTweet.username:

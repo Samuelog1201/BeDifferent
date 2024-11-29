@@ -12,6 +12,7 @@ export const navigate = (screen: Screens) => {
     };
 };
 
+// Obtener Tweets
 export const getTweetsAction = async () => {
     const tweets = await getTweets(); // Obtén los tweets desde Firestore
     return {
@@ -67,7 +68,7 @@ export const setUserCredentials = (user: string) => {
     };
 };
 
-// Acción para establecer las credenciales del usuario
+// Acción para Logout
 export const logOutUser = () => {
     logOut();
 
@@ -77,6 +78,7 @@ export const logOutUser = () => {
     };
 };
 
+// Set User
 export const setUser = (user: ProfileData) => {
     return {
         action: Actions.SET_USER,

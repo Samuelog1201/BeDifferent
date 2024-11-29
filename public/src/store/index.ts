@@ -25,7 +25,7 @@ const onAuth = async () => {
 		}
 	});
 };
-
+// Verificación de Auth
 const OnPageLoaded = () => {
 	onAuth();
 };
@@ -39,6 +39,7 @@ const initialState: AppState = {
 	tweets: [], // Asegúrate de que 'tweets' esté definido en tu tipo AppState
 };
 
+// AppState
 export let appState = initialState;
 
 let observers: Observer[] = [];

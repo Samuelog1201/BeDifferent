@@ -1,3 +1,4 @@
+// Atributos Tweet
 export enum AttributeTweet {
     username = "username",
     userUid = "userUid",

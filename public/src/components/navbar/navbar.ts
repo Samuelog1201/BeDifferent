@@ -1,10 +1,8 @@
- // Importando los atributos desde indexPadre
-
 import { dispatch } from "../../store";
 import { logOutUser, navigate } from "../../store/actions";
 import { Screens } from "../../types/store";
 
-export enum Attribute2 {
+export enum AttributeNavbar {
     "logo" = "logo",
     "settings" = "settings",
     "userlogo" = "userlogo",
@@ -23,19 +21,19 @@ class Navbar extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [Attribute2.logo, Attribute2.settings, Attribute2.userlogo];
+        return [AttributeNavbar.logo, AttributeNavbar.settings, AttributeNavbar.userlogo];
     }
 
     // Cambios en los atributos
     attributeChangedCallback(propName: string, _: string | undefined, newValue: string | undefined) {
         switch (propName) {
-            case Attribute2.logo:
+            case AttributeNavbar.logo:
                 this.logo = newValue || ''; // Asignar valor o cadena vacía por defecto
                 break;
-            case Attribute2.settings:
+            case AttributeNavbar.settings:
                 this.settings = newValue || ''; // Asignar valor o cadena vacía por defecto
                 break;
-            case Attribute2.userlogo:
+            case AttributeNavbar.userlogo:
                 this.userlogo = newValue || ''; // Asignar valor o cadena vacía por defecto
                 this.originalUserLogo = newValue || ''; // Guardar la URL original
                 break;
@@ -49,18 +47,27 @@ class Navbar extends HTMLElement {
     }
 
     addEventListeners() {
+
+         //Boton Navegate a Profile
+
         const userlogo = this.shadowRoot?.querySelector("#userlogo");
         if (userlogo) {
             userlogo.addEventListener("click", () => {
                 dispatch(navigate(Screens.PROFILE));
             });
         }
+
+         //Boton Logout
+
         const logoutLogo = this.shadowRoot?.querySelector("#logout");
         if (logoutLogo) {
             logoutLogo.addEventListener("click", () => {
                 dispatch(logOutUser());
             });
         }
+
+        //Boton Home
+        
         const homeLogo = this.shadowRoot?.querySelector("#home");
         if (homeLogo) {
             homeLogo.addEventListener("click", () => {
@@ -69,41 +76,6 @@ class Navbar extends HTMLElement {
         }
     }
 
-    toggleUserList() {
-        this.usersListVisible = !this.usersListVisible;
-        const userList = this.shadowRoot?.querySelector("#user-list");
-        const userlogoElement = this.shadowRoot?.querySelector("#userlogo") as HTMLImageElement;
-
-        if (userList) {
-            userList.classList.toggle("visible", this.usersListVisible); // Toggle de visibilidad
-        }
-
-        // Cambiar la imagen del userlogo según la visibilidad de la lista
-        if (userlogoElement) {
-            userlogoElement.src = this.usersListVisible
-                ? "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User-Black.png?alt=media&token=4d96a706-2d1f-477f-bbef-d760a179f881"
-                : this.originalUserLogo;
-        }
-
-        // Emitir evento para alternar la lista de usuarios en la sección derecha
-        const event = new CustomEvent('toggle-user-list', { bubbles: true, composed: true });
-        this.dispatchEvent(event);
-    }
-
-    // Renderiza los perfiles de usuario
-    renderUserProfiles() {
-        const container = document.createElement("div");
-        container.setAttribute("id", "user-list");
-
-        // Iterar sobre los perfiles de usuario y crear elementos de perfil
-        const profiles = this.querySelectorAll("my-profile");
-        profiles.forEach(profile => {
-            const profileClone = profile.cloneNode(true);
-            container.appendChild(profileClone);
-        });
-
-        return container;
-    }
 
     // Método render
     render() {
@@ -111,7 +83,7 @@ class Navbar extends HTMLElement {
             // Valores predeterminados si los atributos no están definidos
             const logoSrc = this.logo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=440be58b-52d3-4aec-80ef-253f1d28ccd3";
             const homeSrc = this.settings || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-Settings.png?alt=media&token=97671f73-3ed8-4a19-ae13-b7c1f33271cb";
-            const logoutSrc = this.userlogo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
+            const logoutSrc = this.userlogo || "https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png";
             const userLogoSrc = this.userlogo || "https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-User.png?alt=media&token=639c3c12-4a33-47bb-b29e-ddbc571b96ff";
 
             // Solo usamos innerHTML una vez para evitar múltiples renderizados
@@ -155,7 +127,7 @@ class Navbar extends HTMLElement {
                 </style>
                 <nav>
                     <div>
-                        <img id="logout" src="${logoutSrc}" alt="User Logo">
+                        <img id="logout" src="${logoutSrc}" alt="Logout">
                     </div>
                     <div>
                         <img id="home" src="${logoSrc}" alt="Home">
@@ -165,9 +137,6 @@ class Navbar extends HTMLElement {
                     </div>
                 </nav>
             `;
-
-            const userList = this.renderUserProfiles();
-            this.shadowRoot.appendChild(userList);
         }
     }
 }

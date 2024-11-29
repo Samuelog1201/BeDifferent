@@ -5,6 +5,7 @@ let db: any;
 let auth: any;
 let storage: any;
 
+// Instancia de FireBase
 export const getFirebaseInstance = async () => {
     if (!db) {
         const { initializeApp } = await import('firebase/app');
@@ -116,7 +117,7 @@ export const getTweets = async () => {
     }
 };
 
-// Función para obtener tweets
+// Función para obtener tweets en Tiempo Real
 export const getTweetsListener = async (renderTweets: (data: any[]) => void) => {
     try {
         const { db } = await getFirebaseInstance();
@@ -223,7 +224,7 @@ export const deleteTweetById = async (tweetId: string) => {
     }
 };
 
-// Función para eliminar un tweet
+// Función para Logout
 export const logOut = async () => {
     const { auth } = await getFirebaseInstance();
     const { signOut } = await import('firebase/auth');

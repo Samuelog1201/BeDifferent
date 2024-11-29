@@ -4,7 +4,6 @@ import { dataTweet } from '../../data/data';
 import { appState } from '../../store/';
 import { addTweet, getTweetsListener } from '../../utils/firebase';
 import { TweetData } from '../../types/tweets';
-import { getTweets } from './../../utils/firebase';
 
 class CenterSection extends HTMLElement {
     private loggedInProfile: { uid: number; name: string; avatar: string } | null = null;
@@ -115,7 +114,8 @@ class CenterSection extends HTMLElement {
             tweetText.addEventListener('input', () => {
                 tweetButton.disabled = !tweetText.value.trim();
             });
-
+        
+            //Agregar Tweet
             if (tweetButton) {
                 tweetButton.addEventListener('click', () => {
                     const tweetTextValue = tweetText.value;
@@ -152,7 +152,7 @@ class CenterSection extends HTMLElement {
                 });
             }
         }
-
+        // Recibir Tweets Tiempo real
         getTweetsListener((tweetCollection: any) => {
             if (this.tweetListParent) {
                 this.tweetListParent.innerHTML = '';  // Limpiar antes de renderizar
