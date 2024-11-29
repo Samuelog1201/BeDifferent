@@ -46,23 +46,73 @@ class Profile extends HTMLElement {
 		if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-				.user_name {
-					color: red;
-				}
-				.my-tweets {
-					display: flex;
-					flex-direction: column;
-					gap: 15px;
-				}
+					/* Tarjeta centrada para el perfil */
+					section {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						flex-direction: column;
+						background-color: #f9f9f9; /* Fondo claro */
+						border-radius: 15px; /* Bordes más redondeados */
+						padding: 20px; /* Espaciado interno */
+						box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+						max-width: 400px; /* Ancho máximo para la tarjeta */
+						width: 100%; /* Ocupa todo el ancho disponible */
+						margin: 20px auto; /* Centra la tarjeta verticalmente */
+					}
+
+					.info-perfil {
+						text-align: center; /* Centra el contenido */
+						margin-bottom: 15px; /* Separación con los tweets */
+					}
+
+					h1 {
+						font-size: 1.8em;
+						font-family: "Rubik", sans-serif;
+						font-weight: bold;
+						color: #333; /* Título oscuro */
+						margin-bottom: 10px; /* Espaciado inferior */
+					}
+
+					h2, h3 {
+						font-family: "Rubik", sans-serif;
+						color: #555; /* Color gris para subtítulos */
+						margin: 5px 0; /* Espaciado uniforme */
+					}
+
+					h2 {
+						font-size: 1.5em; /* Tamaño ligeramente mayor */
+						font-weight: bold;
+					}
+
+					h3 {
+						font-size: 1.2em;
+					}
+
+					.user_name {
+						color: #d9534f; /* Rojo claro consistente con el tema */
+						font-weight: bold;
+					}
+
+					.my-tweets {
+						display: flex;
+						flex-direction: column;
+						gap: 15px;
+						width: 100%; /* Ocupa todo el ancho de la tarjeta */
+					}
 				</style>
-				<div>
-					<h1>Perfil</h1>
-					<h2>${this.name ||'Nombre de Usuario'}</h2>
-					<h3>${this.email ||'email'}</h3>
-					<h3>${this.age ||'edad'}</h3>
+
+				<section>
+					<div class="info-perfil">
+						<h1>Perfil</h1>
+						<h2 class="user_name">${this.name || 'Nombre de Usuario'}</h2>
+						<h3>${this.email || 'email@example.com'}</h3>
+						<h3>Edad: ${this.age || 'Edad no especificada'}</h3>
+					</div>    
 
 					<div class="my-tweets"></div>
-				</div>
+				</section>
+
             `;
 
             this.tweetListParent = this.shadowRoot.querySelector('.my-tweets');

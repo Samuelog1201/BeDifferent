@@ -28,9 +28,14 @@ class Dashboard extends HTMLElement {
 
   render() {
     this.shadowRoot!.innerHTML = `
-      <style>
-        /* Tus estilos aquí */
-      </style>
+          <style>
+             .container{
+               background-image: url("https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Fondo.png?alt=media&token=91673126-7baf-4e2b-8853-fa8dfc208bb0");
+               background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+               background-position: center; /* Centra la imagen en el contenedor */
+               background-repeat: no-repeat; /* Evita que la imagen se repita */
+               } 
+          </style>
       <div>
       </div>
     `;

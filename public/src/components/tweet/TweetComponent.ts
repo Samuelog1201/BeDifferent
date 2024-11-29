@@ -135,11 +135,11 @@ class TweetComponent extends HTMLElement {
                 <section>
                     <div>
                         <div class="info-perfil">
-                            <img id="icono-perfil" src="${this.avatar || 'ruta/a/avatar/predeterminado.png'}" alt="avatar"> 
+                            <img id="icono-perfil" src="${this.avatar || 'https://icons.veryicon.com/png/o/miscellaneous/rookie-official-icon-gallery/225-default-avatar.png'}" alt="avatar"> 
                             <h1>${this.userUid || 'Usuario desconocido'}</h1>
                         </div>         
                         <p>${this.content || 'Contenido no disponible'}</p>
-                        <img id="image-upload" src="${this.imageUrl}" alt="image upload">
+                        <img id="image-upload" src="${this.imageUrl || 'https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Logo-BD.png?alt=media&token=440be58b-52d3-4aec-80ef-253f1d28ccd3'}" alt="image upload">
                     </div>
                 </section>
             `;

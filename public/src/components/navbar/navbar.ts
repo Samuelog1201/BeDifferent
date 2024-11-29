@@ -98,8 +98,18 @@ class Navbar extends HTMLElement {
                         overflow-y: auto;
                     }
 
+                    .homelogo {
+                      
+                    }
+
                     img {
                         width: 30px;
+                        height: auto;
+                        cursor: pointer;
+                    }
+
+                    #home {
+                        width: 60px;
                         height: auto;
                         cursor: pointer;
                     }
@@ -129,7 +139,7 @@ class Navbar extends HTMLElement {
                     <div>
                         <img id="logout" src="${logoutSrc}" alt="Logout">
                     </div>
-                    <div>
+                    <div class= "homelogo">
                         <img id="home" src="${logoSrc}" alt="Home">
                     </div>
                     <div>

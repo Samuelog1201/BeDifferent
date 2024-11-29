@@ -141,11 +141,36 @@ class AppContainer extends HTMLElement {
             style.textContent = `
                 @import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
                 @import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
+            
                 .container {
-                    display: flex;  
-                    background-image:   opacity: 100%,
-                    url("https://s0.smartresize.com/wallpaper/928/844/HD-wallpaper-motivation-fitness-workout-dark-ultra-sports-fitness-dark-motivation-workout.jpg");
+                    background-image: url("https://firebasestorage.googleapis.com/v0/b/bedifferent-36168.appspot.com/o/Fondo.png?alt=media&token=91673126-7baf-4e2b-8853-fa8dfc208bb0");
+                    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+                    background-position: center; /* Centra la imagen en el contenedor */
+                    background-repeat: no-repeat; /* Evita que la imagen se repita */
+
+                }
+            
+                center-section {
+                    flex-grow: 1;  
+                }
+            
+                @media (max-width: 768px) {  
+                    .container {
+                        display: flex;
+                        flex-direction: column;
+                    }
+            
+                    center-section {
+                        order: 1;  
+                    }
+            
+                    right-section {
+                        order: 2;  
+                    }
+            
+                    left-section {
+                        order: 3;  
+                    }
                 }
             `;
 
